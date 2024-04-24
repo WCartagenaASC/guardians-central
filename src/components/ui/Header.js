@@ -24,7 +24,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav>
+            {/*<Nav>
                 <ul className="navbar-nav mb-2 mb-lg-0 ">
                     <li className="nav-item">
                         <Link className="text-decoration-none px-2" to="vanguard">Vanguard</Link>
@@ -36,7 +36,7 @@ const Header = () => {
                         <Link className="text-decoration-none px-2" to="gambit">Gambit</Link>
                     </li>
                 </ul>
-            </Nav>
+    </Nav>*/}
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -7,7 +7,8 @@ import BansheeAda from "./BansheeAda";
 import SeasonReport from "./SeasonReport";
 const HomeAccordian = () =>{
     return(
-      <Accordion alwaysOpen className="p-4">
+      //defaultActiveKey Forces first slide to be open. This can be removed when other accordian items are deployed
+      <Accordion defaultActiveKey="0" alwaysOpen className="p-4">
         <Accordion.Item eventKey="0" className="accordian-item text-white">
           <Accordion.Header>
             <div className="accordian-container">
@@ -27,7 +28,8 @@ const HomeAccordian = () =>{
           </Accordion.Body>
         </Accordion.Item>
 
-
+        {/* Activate when ready */}
+        {/*
         <Accordion.Item eventKey="1" className="accordian-item text-white">
         <Accordion.Header>
           <div className="accordian-container">
@@ -44,7 +46,10 @@ const HomeAccordian = () =>{
           <BansheeAda/>
         </Accordion.Body>
       </Accordion.Item>
+      */}
 
+      {/* Activate when ready */}
+      {/*
       <Accordion.Item eventKey="2" className="accordian-item text-white">
         <Accordion.Header>
           <div className="accordian-container">
@@ -60,6 +65,7 @@ const HomeAccordian = () =>{
           <LostSector/>
         </Accordion.Body>
       </Accordion.Item>
+      */}
       {/* Activate when ready */}
       {/*
       <Accordion.Item eventKey="3" className="accordian-item text-white">
@@ -98,6 +104,5 @@ const HomeAccordian = () =>{
 }
 
 export default HomeAccordian;
-// To make this component more re-usable I would like to make an accordian itemm based on array size and passed in props. Prop names should be Header, Body
 // Figure out how to convert the weekly rotator icons to svgs and fill them with a different color
-// Make an accordian item for Xur, Dares of Eternity maybe goes in weekly rotators
+// Dares of Eternity maybe goes in weekly rotators
