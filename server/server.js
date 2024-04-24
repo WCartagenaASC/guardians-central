@@ -7,6 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the 'build' directory
+app.use(express.static(path.join(__dirname, '../build')));
+
 // Trust proxy headers set by Nginx
 app.set('trust proxy', true);
 
