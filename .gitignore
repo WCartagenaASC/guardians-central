@@ -39,9 +39,9 @@ yarn-error.log*
 # Database
 /guardians-central.sln
 /database/config.toml
+/database/logging
 /database/bin
 /database/obj
-/database/logging
 /Sqlite3Destiny2DB.zip
 /Extractions/Sqlite3Destiny2DB.sqlite3
 
