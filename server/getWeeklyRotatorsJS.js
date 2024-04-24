@@ -7,7 +7,7 @@ const password = process.env.DATABASE_PASSWORD;
 const database = process.env.DATABASE_NAME;
 const databasePortString = process.env.DATABASE_PORT;
 const databasePort = parseInt(databasePortString,10)
-
+console.log(databasePort);
 var serverConfig = {  
     server: server,  
     authentication: {
