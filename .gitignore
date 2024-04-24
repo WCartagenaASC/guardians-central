@@ -49,3 +49,12 @@ yarn-error.log*
 /server/config.toml
 
 /config.toml
+
+# Authenticate
+/Authenticate/config.toml
+/Authenticate/bin
+/Authenticate/obj
+
+#Requests
+/Requests/bin
+/Requests/obj
