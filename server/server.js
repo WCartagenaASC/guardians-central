@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const getWeeklyRotatorsJS = require('./getWeeklyRotatorsJS');
 require('dotenv').config();
 const app = express();
