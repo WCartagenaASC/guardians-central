@@ -2,22 +2,13 @@ require('dotenv').config();
 console.log(process.env.DATABASE_PORT);
 const sql = require('mssql');
 
-const fs = require('fs');
-const toml = require('toml');
-const configFile = toml.parse(fs.readFileSync('./config.toml', 'utf-8'));
-const server = configFile.Server;
-const user = configFile.UserId;
-const password = configFile.Password;
-const database = configFile.Database;
-const databasePort = configFile.Port;
+const server = process.env.SERVER_IP;
+const user = process.env.DATABASE_USER_ID;
+const password = process.env.DATABASE_PASSWORD;
+const database = process.env.DATABASE_NAME;
+const databasePortString = process.env.DATABASE_PORT;
+const databasePort = parseInt(databasePortString,10)
 
-//const server = process.env.SERVER_IP;
-//const user = process.env.DATABASE_USER_ID;
-//const password = process.env.DATABASE_PASSWORD;
-//const database = process.env.DATABASE_NAME;
-//const databasePortString = process.env.DATABASE_PORT;
-//const databasePort = parseInt(databasePortString,10)
-console.log(`Database port: ${databasePort}`);
 var serverConfig = {  
     server: server,  
     authentication: {
