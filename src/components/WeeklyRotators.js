@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const renderItems = (list) => {
     const result = []
-    console.log(result)
     for(let i = 0; i < list.length; i++){
         result.push(<img className="img-fluid wr-img-icon" key={i} src={list[i]} alt={`Item ${i + 1}`} />);
     }
