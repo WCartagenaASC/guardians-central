@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const renderItems = (list) => {
     const result = []
-    console.log(result)
     for(let i = 0; i < list.length; i++){
         result.push(<img className="img-fluid wr-img-icon" key={i} src={list[i]} alt={`Item ${i + 1}`} />);
     }
@@ -110,7 +109,7 @@ const WeeklyRotators = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/weeklyrotators');
+                const response = await axios.get('https://guardianscentral.gg/weeklyrotators');
                 const data = response.data.getWeeklyRotators;
                 //console.log(data);
     
