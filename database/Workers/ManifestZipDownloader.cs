@@ -1,8 +1,4 @@
-using System;
-using System.Net.Http;
-using System.IO;
-using System.Threading.Tasks;
-using System.Text.Json;
+using Serilog;
 
 public class ManifestZipDownloader{    
     public static async Task DownloadManifest(string BungieRootPath, string ManifestEndpoint, string DestinationFolderPath){
@@ -23,12 +19,12 @@ public class ManifestZipDownloader{
                     // Write the file content to the specified file
                     File.WriteAllBytes(filePath, fileContent);
 
-                    Console.WriteLine($"File downloaded and saved to: {filePath}");
+                    Log.Information($"File downloaded and saved to: {filePath}");
                 }else{
-                    Console.WriteLine($"HTTP Status Code: {downloadManifestResponse.StatusCode}");
+                    Log.Information($"HTTP Status Code: {downloadManifestResponse.StatusCode}");
                 }
             }catch (HttpRequestException ex){
-                Console.WriteLine($"Error: {ex.Message}");
+                Log.Error($"Error: {ex.Message}");
             }
         }
     }

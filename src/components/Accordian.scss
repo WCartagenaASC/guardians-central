@@ -1,0 +1,84 @@
+.accordian-item{
+    background-color: #F5F5DC;
+}
+
+.accordion-button{
+    background-color: #212529;
+    color: #b48608;
+    font-family: 'Droid serif', serif;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #b48608 !important;
+    background-color: #212529;
+
+}
+.accordion-button::after {
+    background-image: url(../assets/images/chevron-up-solid.svg);
+    width: 1;
+  }
+  
+.accordion-button:not(.collapsed)::after {
+    background-image: url(../assets/images/chevron-down-solid.svg);
+    width: 1;
+}
+
+
+.accordian-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction:row;
+    
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .accordian-letters{
+        font-size: 18px;
+    }
+    .accordian-icons{
+        width: 35px;
+    }
+    .accordion-button::after {
+        background-image: url(../assets/images/chevron-up-solid.svg);
+        width: 1;
+        background-size: 18px;
+    }
+      
+    .accordion-button:not(.collapsed)::after {
+    background-image: url(../assets/images/chevron-down-solid.svg);
+    width: 1;
+    background-size: 18px;
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .accordian-letters{
+        font-size: 30px;
+    }
+    .accordian-icons{
+        width: 50px;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .accordian-letters{
+        font-size: 32px;
+    }
+    .accordian-icons{
+        width: 60px;
+    }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .accordian-letters{
+        font-size: 32px;
+    }
+    .accordian-icons{
+        width: 60px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

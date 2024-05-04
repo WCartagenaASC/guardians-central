@@ -1,37 +1,14 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import TwitterWidget from "./TwitterWidget"
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
-import Spinner from 'react-bootstrap/Spinner';
+import './TwitterTabs.scss'
 
 const TwitterTabs = () => {
-    const twitterAccounts = {
-        'BungieHelp': { id: 1 },
-        'DestinyTheGame': { id: 2 },
-        'Destiny2Team': { id: 3 },
-    };
 
     const [activeTab, setTab] = useState('BungieHelp');
-    const [isLoading, setLoading] = useState('');
     const handleTabSelect = (tab) => {
-        setLoading('')
         setTab(tab)
-    }
-
-    // Sets a delay for spinner. Creates a visual trick to simulate loading between tabs
-    useEffect(() => {
-        const delay = setTimeout(() => {
-            setLoading('visually-hidden');
-        }, 1100); // Adjust the delay as needed
-        return () => clearTimeout(delay); // Clean up the timeout when the component unmounts
-    });
-
-    // Renders a Account based on selected tab
-    const renderSelectedAccount = () => {
-        const selectedAccount = twitterAccounts[activeTab];
-        if (selectedAccount) {
-            return <TwitterWidget screenName={activeTab} />;
-        }
     }
 
     return(
@@ -39,20 +16,27 @@ const TwitterTabs = () => {
         <Card>
             <Card.Header className='bg-dark'>
                 <Nav variant="tabs">
-                    {Object.keys(twitterAccounts).map((accountName) => (
-                        <React.Fragment key={twitterAccounts[accountName].id}>
-                        <Nav.Item>
-                            <Nav.Link key={twitterAccounts[accountName].id} style={{color:'#b48608'}} active={activeTab === accountName} onClick={() => handleTabSelect(accountName)}>{accountName}</Nav.Link>
-                        </Nav.Item>
-                        </React.Fragment> 
-                    ))}
+                    <Nav.Item className='nav-item-twitter-tabs'>
+                        <Nav.Link key="1" style={{color:'#b48608'}} active={activeTab === "BungieHelp"} onClick={() => handleTabSelect("BungieHelp")}>BungieHelp</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className='nav-item-twitter-tabs'>
+                        <Nav.Link key="2" style={{color:'#b48608'}} active={activeTab === "DestinyTheGame"} onClick={() => handleTabSelect("DestinyTheGame")}>DestinyTheGame</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className='nav-item-twitter-tabs'>
+                        <Nav.Link key="3" style={{color:'#b48608'}} active={activeTab === "Destiny2Team"} onClick={() => handleTabSelect("Destiny2Team")}>Destiny2Team</Nav.Link>
+                    </Nav.Item>
                 </Nav>
             </Card.Header>
             <Card.Body>
-                <Spinner className = {isLoading} animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-                {renderSelectedAccount()}
+                <div style={{ display: activeTab === "BungieHelp" ? 'block' : 'none' }}>
+                    <TwitterWidget screenName="BungieHelp"/>
+                </div>
+                <div style={{ display: activeTab === "DestinyTheGame" ? 'block' : 'none' }}>
+                    <TwitterWidget screenName="DestinyTheGame"/>
+                </div>
+                <div style={{ display: activeTab === "Destiny2Team" ? 'block' : 'none' }}>
+                    <TwitterWidget screenName="Destiny2Team" />
+                </div>
             </Card.Body>
         </Card>
     </div>

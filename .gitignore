@@ -39,6 +39,7 @@ yarn-error.log*
 # Database
 /guardians-central.sln
 /database/config.toml
+/database/logging
 /database/bin
 /database/obj
 /Sqlite3Destiny2DB.zip
@@ -48,6 +49,7 @@ yarn-error.log*
 /server/node_modules
 /server/config.toml
 
+# Temp
 /config.toml
 
 # Authenticate
@@ -55,6 +57,13 @@ yarn-error.log*
 /Authenticate/bin
 /Authenticate/obj
 
-#Requests
+# Requests
 /Requests/bin
 /Requests/obj
+
+# Temp
+/WeeklyRotators/obj
+/WeeklyRotators/bin
+/WeeklyRotators/config.toml
+/WeeklyRotators/logging
+.env

@@ -13,13 +13,15 @@ const Footer =() => {
                 <Link className=" text-body-secondary text-decoration-nonetext-light" to="/">
                     <FontAwesomeIcon className = "text-light px-2" icon={faMoon} size="lg" />
                 </Link>
-                <span className="text-body-secondary"><Link className="text-decoration-none link-light" to="/">© 2023 Guardians Central, Inc</Link></span>
+                <span className="text-body-secondary"><Link className="text-decoration-none link-light" to="/">© 2024 Guardians Central.gg</Link></span>
             </div>
         
             <ul className="nav col-md-4 justify-content-end list-unstyled d-flex px-2">
-                <li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faSquareXTwitter} size="lg" /></li>
-                <li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faGithub} size="lg" /></li>
-                <li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faDiscord} size="lg" /></li>
+                {/*<li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faSquareXTwitter} size="lg" /></li>*/}
+                <Link className=" text-body-secondary text-decoration-nonetext-light" to="https://github.com/WesleyCartagena/guardians-central">
+                    <li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faGithub} size="lg" /></li>
+                </Link>
+                {/*<li className="mx-1 text-light gc-icons"><FontAwesomeIcon icon={faDiscord} size="lg" /></li>*/}
             </ul>
             </footer>
 

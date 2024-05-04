@@ -1,8 +1,5 @@
-using System;
-using System.Net.Http;
-using System.IO;
-using System.Threading.Tasks;
 using System.Text.Json;
+using Serilog;
 
 public class ManifestResponse{
     public class mobileWorldContentPaths{
@@ -49,7 +46,7 @@ public class ManifestEndpointRetrieval{
                     throw new ApplicationException($"HTTP Status Code: {getManifestResponse.StatusCode}");// Not Tested
                 }
             }catch (HttpRequestException ex){
-                Console.WriteLine($"Error: {ex.Message}");
+                Log.Error($"Error: {ex.Message}");
                 return ex.Message;
             }
         }

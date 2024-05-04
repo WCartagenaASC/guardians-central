@@ -1,0 +1,119 @@
+/*wr = Weekly Rotator*/
+.wr-img-column-container{
+    width: 100%;
+}
+.wr-img-icon{
+    width:20%;
+    padding: 1px;
+}
+
+.wr-mods-column-container{
+    width: 100%;
+}
+
+.wr-mod-icon{
+    width:35px;
+}
+/*Adds shadow to ty*/
+.wr-overlay-text {
+    color: #FFFF;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); /* Adjust the shadow values as needed */
+    font-weight: 'bold';
+}
+
+.wr-overlay-container {
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.wr-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust the alpha (last value) to control the overlay transparency */
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .wr-img-icon{
+        width:25%;
+        padding: 1px;
+    }
+    .wr-mod-icon{
+        width:30px;
+    }
+    .wr-mod-text{
+        font-size: 15px;
+    }
+    .wr-mods-column{
+        padding: 2px;
+    }
+
+    .wr-mods-column-container h5{
+        font-size: 15px;
+    }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .wr-img-icon{
+        width:15%;
+        padding: 1px;
+    }
+
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .wr-img-icon{
+        width:20%;
+        padding: 1px;
+    }
+    .wr-mod-icon{
+        width:40px;
+    }
+    .wr-mod-text{
+        font-size: 20px;
+    }
+    .wr-mods-column{
+        padding: 10px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .wr-mod-icon{
+        width:40px;
+    }
+    .wr-mod-text{
+        font-size: 20px;
+    }
+    .wr-mods-column{
+        padding: 10px;
+    }
+}
+
+@media only screen and (min-width: 2200px) {
+    .wr-overlay-container {
+        width: 1280px;
+        height: 720px; 
+    }
+    .wr-mod-icon{
+        width:40px;
+    }
+    .wr-mod-text{
+        font-size: 20px;
+    }
+    .wr-mods-column{
+        padding: 10px;
+    }
+
+}

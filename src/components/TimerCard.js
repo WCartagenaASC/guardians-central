@@ -23,11 +23,11 @@ const TimerCard = () => {
     <div className='p-4'>
       <Card>
         <Card.Header className='bg-dark'>
-          <Nav variant="tabs" defaultActiveKey="#daily">
-            <Nav.Item >
+          <Nav variant="tabs" defaultActiveKey="#daily" className='d-inline-flex-row'>
+            <Nav.Item className='nav-item-timer-card'>
               <Nav.Link style={{color:'#b48608'}} active={activeTab === 'daily'} onClick={() => handleTabSelect('daily')}>Daily Reset Timer</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className='nav-item-timer-card'>
               <Nav.Link style={{color:'#b48608'}}active={activeTab === 'weekly'} onClick={() => handleTabSelect('weekly')}>Weekly Reset Timer</Nav.Link>
             </Nav.Item>
           </Nav>

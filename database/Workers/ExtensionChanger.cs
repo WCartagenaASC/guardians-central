@@ -1,5 +1,4 @@
-using System;
-using System.IO.Compression;
+using Serilog;
 
 public class ExtensionChanger{
     public static void ChangingFileExtension(string ExtractPath){
@@ -13,10 +12,11 @@ public class ExtensionChanger{
 
             try{
                 File.Move(filePath, newFilePath);
+                Log.Information("File successfully moved");
             }catch (IOException ex){
                 if (ex.Message.Contains("Cannot create a file when that file already exists")){
                     // Handle the case where the file already exists
-                    Console.WriteLine($"File {newFileName} already exists. Deleting and retrying.");
+                    Log.Error($"File {newFileName} already exists. Deleting and retrying.");
 
                     // Delete the existing file
                     File.Delete(newFilePath);
@@ -24,10 +24,10 @@ public class ExtensionChanger{
                     // Retry renaming
                     File.Move(filePath, newFilePath);
 
-                    Console.WriteLine($"File {fileName} renamed to {newFileName}");
+                    Log.Information($"File {fileName} renamed to {newFileName}");
                 }else{
                     // Handle other IOExceptions
-                    Console.WriteLine($"Error renaming file {fileName}: {ex.Message}");
+                    Log.Information($"Error renaming file {fileName}: {ex.Message}");
                 }
             }
         }

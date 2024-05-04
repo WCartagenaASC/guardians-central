@@ -1,49 +1,85 @@
-// TO-DO
-// Surround methods with try blocks
-// Maybe remove worker try blocks and just use external ones
-// Research some file structures
-// Connect to SQLLite DB and extract tables and transfer them to MySqlServer
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text.Json;
 using Nett;
+using Serilog;
 
 
 class Program{
-    static async Task Main(){
+    static async Task Main(string[] args){        
+        // Check if the command-line argument for the TOML file path is provided
+        if (args.Length < 1){
+            Console.WriteLine("Please provide a config path");
+            return;
+        }
 
-        // Gets all the data from TOML File 
-        var table = Toml.ReadFile("config.toml");
+        // Get the TOML file path from the command-line argument
+        string tomlFilePath = args[0];
+
+        // Check if the TOML file exists
+        if (!File.Exists(tomlFilePath)){
+            Console.WriteLine($"Error: The specified config file '{tomlFilePath}' does not exist.");
+            return;
+        }
+
+        // Gets all the data from the TOML file
+        var configFile = Toml.ReadFile(tomlFilePath);
+
+        string LoggerPath = configFile.Get<string>("LoggerPath");
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.Console()
+            .WriteTo.File($"{LoggerPath}Log_{DateTime.Now:yyyyMMdd_HHmmss}.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
         // Converts TOML File data to strings
-        string BungieRootPath = table.Get<string>("BungieRootPath");
-        string BungieApiRootPath = table.Get<string>("BungieAPIRootPath");
-        string GetManifestEndpoint = table.Get<string>("GetManifestEndpoint");
-        string DestinationFolderPath = table.Get<string>("DestinationFolderPath");
-        string ManifestZipPath = table.Get<string>("ManifestZipPath");
-        string ExtractionPath = table.Get<string>("ExtractionPath");
-        string Sqlite3DbPath = table.Get<string>("Sqlite3DbPath");
-        string Server = table.Get<string>("Server");
-        Console.WriteLine(Server);
-        string Database = table.Get<string>("Database");
-        Console.WriteLine(Database);
-        string UserId = table.Get<string>("UserId");
-        string Password = table.Get<string>("Password");
-        Console.WriteLine(UserId);
-        Console.WriteLine(Sqlite3DbPath);
+        string BungieRootPath = configFile.Get<string>("BungieRootPath");
+        string BungieApiRootPath = configFile.Get<string>("BungieAPIRootPath");
+        string GetManifestEndpoint = configFile.Get<string>("GetManifestEndpoint");
+        string DestinationFolderPath = configFile.Get<string>("DestinationFolderPath");
+        string ManifestZipPath = configFile.Get<string>("ManifestZipPath");
+        string ExtractionPath = configFile.Get<string>("ExtractionPath");
+        string Sqlite3DbPath = configFile.Get<string>("Sqlite3DbPath");
+        string Server = configFile.Get<string>("Server");
+        string Database = configFile.Get<string>("Database");
+        string UserId = configFile.Get<string>("UserId");
+        string Password = configFile.Get<string>("Password");
+        Log.Information(Server);
+        Log.Information(Database);
+        Log.Information(UserId);
+        Log.Information(Sqlite3DbPath);
 
         // Gets the Manifest Endpoint
-        string manifestEndpoint = await ManifestEndpointRetrieval.GetManifestEndpoint(BungieApiRootPath, GetManifestEndpoint);
-        //Console.WriteLine(manifestEndpoint);
+        string manifestEndpoint = "";
+        try{
+            manifestEndpoint = await ManifestEndpointRetrieval.GetManifestEndpoint(BungieApiRootPath, GetManifestEndpoint);
+            Log.Information(manifestEndpoint);
+        }catch(Exception ex){
+            Log.Error(ex, "Failed to Get Manifest Endpoint");
+        }
 
         // Recieves Manifest Endpoint and tries to download the manifest zip folder
-        await ManifestZipDownloader.DownloadManifest(BungieRootPath:BungieRootPath, ManifestEndpoint:manifestEndpoint, DestinationFolderPath:DestinationFolderPath);
+        try{
+            await ManifestZipDownloader.DownloadManifest(BungieRootPath:BungieRootPath, ManifestEndpoint:manifestEndpoint, DestinationFolderPath:DestinationFolderPath);
+        }catch(Exception ex){
+            Log.Error(ex, "Failed to Download Manifest");
+        }
 
-        ManifestFileExtractor.ExtractingManifest(ZipPath:ManifestZipPath, ExtractPath:ExtractionPath);
-        //Console.WriteLine(ExtractedFilePathList);
-        ExtensionChanger.ChangingFileExtension(ExtractPath:ExtractionPath);
+        try{
+            ManifestFileExtractor.ExtractingManifest(ZipPath:ManifestZipPath, ExtractPath:ExtractionPath);
+        }catch(Exception ex){
+            Log.Error(ex, "Failed to Extract Manifest");
+        }
 
-        ManifestTableExtracter.DataMigration(Sqlite3DbPath:Sqlite3DbPath, Server:Server, Database:Database, UserId:UserId, Password:Password);
+        try{
+            ExtensionChanger.ChangingFileExtension(ExtractPath:ExtractionPath);
+        }catch(Exception ex){
+            Log.Error(ex, "Failed to Change Manifest File Extension");
+        }
+
+        try{
+            ManifestTableExtracter.DataMigration(Sqlite3DbPath:Sqlite3DbPath, Server:Server, Database:Database, UserId:UserId, Password:Password);
+        }catch(Exception ex){
+            Log.Error(ex, "Failed to Migrate Data");
+        }
+
+        Log.CloseAndFlush();  
     }
 }

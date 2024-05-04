@@ -1,0 +1,266 @@
+/* Hide scrollbar for IE, Edge and Firefox NOT TESTED*/
+.example {
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+/* FOR TESTING PURPOSES */
+/*
+.daily-weapon-container{
+    background-color: red;
+}
+
+.daily-weapon-list-container{
+    background-color: aqua;
+}
+.ba-img-column-container{
+    background-color: red;
+}
+*/
+/* */
+.ba-img-icon{
+    width: 20%;
+    padding: 1px;
+}
+
+.ba-mods-column-container{
+    width: 100%;
+}
+.weapon-img-icon{
+    width:85%;
+}
+.perk-icon{
+    width:35px;
+}
+/*Adds shadow to ty*/
+.ba-overlay-text {
+    color: #FFFF;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); /* Adjust the shadow values as needed */
+    font-weight: 'bold';
+}
+
+.ba-overlay-container {
+    position: relative;
+    overflow: hidden;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.ba-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust the alpha (last value) to control the overlay transparency */
+}
+
+.ba-list{
+    list-style-type: none;
+}
+.ba-list-item{
+    list-style-type: none;
+
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .ba-img-icon{
+        width:20%;
+        padding: 1px;
+    }
+    .perk-icon{
+        width:36px;
+    }
+    .weapon-strings-container span{
+        font-size: 14px;
+    }
+
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .ba-img-icon{
+        width:15%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 45%;
+    }
+    .perk-icon{
+        width: 22px;
+    }
+    .weapon-strings-container span{
+        font-size: 9px;
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .ba-img-icon{
+        width:15%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 50%;
+    }
+    .perk-icon{
+        width: 29px;
+    }
+    .weapon-strings-container span{
+        font-size: 11px;
+    }
+
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .ba-img-icon{
+        width:18%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 45%;
+    }
+    .perk-icon{
+        width: 22px;
+    }
+    .weapon-strings-container span{
+        font-size: 9px;
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .ba-img-icon{
+        width:18%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 50%;
+    }
+    .perk-icon{
+        width: 27px;
+    }
+    .weapon-strings-container span{
+        font-size: 10.5px;
+    }
+}
+@media only screen and (min-width: 1300px) {
+    .ba-img-icon{
+        width:18%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 45%;
+    }
+    .perk-icon{
+        width: 23px;
+    }
+    .weapon-strings-container span{
+        font-size: 9px;
+    }
+}
+
+  
+@media only screen and (min-width: 1601px) {
+    .ba-img-icon{
+        width:18%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 40%;
+    }
+    .perk-icon{
+        width: 30px;
+    }
+    .weapon-strings-container span{
+        font-size: 12px;
+    }
+}
+
+@media only screen and (min-width: 1700px) {
+    .weapon-strings-container span{
+        font-size: 10px;
+    }
+}
+
+@media only screen and (min-width: 1800px) {
+    .ba-img-icon{
+        width:18%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+    }
+    .weapon-img-icon-container{
+        width: 40%;
+    }
+    .perk-icon{
+        width: 25px;
+    }
+    .weapon-strings-container span{
+        font-size: 10px;
+    }
+}
+@media only screen and (min-width: 2000px) {
+
+    .ba-img-icon{
+        width:20%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+        padding: 0%;
+    }
+    .weapon-img-icon-container{
+        width: 40%;
+    }
+    .perk-icon{
+        width: 30px;
+    }
+    .weapon-strings-container span{
+        font-size: 12px;
+    }
+}
+@media only screen and (min-width: 2200px) {
+    .ba-overlay-container {
+        width: 1280px;
+        height: 720px; 
+    }
+    .ba-img-icon{
+        width:20%;
+        padding: 1px;
+    }
+    .daily-weapon-container{
+        width: 32%;
+        padding: 0%;
+    }
+    .weapon-img-icon-container{
+        width: 40%;
+    }
+    .perk-icon{
+        width: 30px;
+    }
+    .weapon-strings-container span{
+        font-size: 13px;
+    }
+}
