@@ -111,8 +111,7 @@ const WeeklyRotators = () => {
             try {
                 const response = await axios.get('https://guardianscentral.gg/weeklyrotators');
                 const data = response.data.getWeeklyRotators;
-                //console.log(data);
-    
+
                 // Parse the JSON data and set the lists
                 data.forEach(item => {
                     const jsonData = JSON.parse(item.Json);
