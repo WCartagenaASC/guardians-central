@@ -87,6 +87,17 @@ public class InventoryItemDefinitionJson{
     public class Sockets{
         public SocketEntries[]? socketEntries { get; set; }
     }
+
+    public class Stat{
+        public long statHash { get; set; }
+        public int value { get; set; }
+        public int minimum { get; set; }
+        public int maximum { get; set; }
+        public int displayMaximum { get; set; }
+    }
+    public class Stats{
+        public Dictionary<long, Stat> stats { get; set; }
+    }
     public class Root{
         public DisplayProperties? displayProperties { get; set; }
         public long[]? itemCategoryHashes { get; set; }
@@ -97,6 +108,7 @@ public class InventoryItemDefinitionJson{
         public string itemTypeAndTierDisplayName { get; set; }
         public Inventory? inventory { get; set; }
         public Sockets? sockets { get; set; }
+        public Stats? stats { get; set; }
     }
 }
 public class DamageTypeMapping{
@@ -291,6 +303,7 @@ public class WeeklyRotatorsTable{
                         string inventoryItemType = "";
                         string damageTypeIcon = "";
                         string damageTypeName = "";
+                        string inventoryItemRpmStat = "";
                         using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyInventoryItemDefinition WHERE Id = {itemId}", msSqlConnection)){
                             using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                                 while (reader.Read()){
@@ -330,7 +343,13 @@ public class WeeklyRotatorsTable{
                                             damageTypeIcon = result.Icon;
                                             damageTypeName = result.Name;
                                         }
-
+                                        if (inventoryItemDefinitionRoot.stats != null && inventoryItemDefinitionRoot.stats.stats != null){
+                                            foreach(var kvp in inventoryItemDefinitionRoot.stats.stats) {
+                                                if (kvp.Key.Equals(4284893193)) {
+                                                    inventoryItemRpmStat = kvp.Value.value.ToString();
+                                                }
+                                            }
+                                        }
                                                             
                                         if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(22) == true && inventoryItemDefinitionRoot.itemCategoryHashes.Contains(20)){
                                             inventoryItemType = "TitanArmor";
@@ -354,7 +373,8 @@ public class WeeklyRotatorsTable{
                             { "inventoryTierTypeName", inventoryItemTierTypeName },
                             { "damageTypeName", damageTypeName },
                             { "damageTypeIcon", damageTypeIcon },
-                            { "isCraftable", inventoryItemIsCraftable}
+                            { "isCraftable", inventoryItemIsCraftable},
+                            { "rpmStat", inventoryItemRpmStat}
                         };
 
                         string inventoryItemFrameName = "";
@@ -400,54 +420,84 @@ public class WeeklyRotatorsTable{
                             if (innerDictionary.ContainsKey("frameIcon")){
                                 innerDictionary.Remove("frameIcon");
                             }
+                            if (innerDictionary.ContainsKey("rpmStat")){
+                                innerDictionary.Remove("rpmStat");
+                            }
                         }
                         itemObject.Add(inventoryItemName, innerDictionary);
                         if (inventoryItemType != null){
                             switch (inventoryItemType){
                             case "TitanArmor":
-                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
-                                    titanArmor.Insert(0, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
-                                    titanArmor.Insert(1, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
-                                    titanArmor.Insert(2, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
-                                    titanArmor.Insert(3, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Mark")) {
-                                    titanArmor.Insert(4, itemObject);
-                                }else{
-                                    titanArmor.Add(itemObject);
+                                int titanIndex = 0;
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet"))
+                                {
+                                    titanIndex = Math.Min(0, titanArmor.Count); // Ensure index is within bounds
                                 }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets"))
+                                {
+                                    titanIndex = Math.Min(1, titanArmor.Count); // Ensure index is within bounds
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor"))
+                                {
+                                    titanIndex = Math.Min(2, titanArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor"))
+                                {
+                                    titanIndex = Math.Min(3, titanArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Mark"))
+                                {
+                                    titanIndex = Math.Min(4, titanArmor.Count);
+                                }
+                                titanArmor.Insert(titanIndex, itemObject);
                                 break;
                             case "HunterArmor":
-                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
-                                    hunterArmor.Insert(0, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
-                                    hunterArmor.Insert(1, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
-                                    hunterArmor.Insert(2, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
-                                    hunterArmor.Insert(3, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Cloak")) {
-                                    hunterArmor.Insert(4, itemObject);
-                                }else{
-                                    hunterArmor.Add(itemObject);
+                                int hunterIndex = 0;
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet"))
+                                {
+                                    hunterIndex = Math.Min(0, hunterArmor.Count); // Ensure index is within bounds
                                 }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets"))
+                                {
+                                    hunterIndex = Math.Min(1, hunterArmor.Count); // Ensure index is within bounds
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor"))
+                                {
+                                    hunterIndex = Math.Min(2, hunterArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor"))
+                                {
+                                    hunterIndex = Math.Min(3, hunterArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Cloak"))
+                                {
+                                    hunterIndex = Math.Min(4, hunterArmor.Count);
+                                }
+                                hunterArmor.Insert(hunterIndex, itemObject);
                                 break;
                             case "WarlockArmor":
-                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
-                                    warlockArmor.Insert(0, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
-                                    warlockArmor.Insert(1, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
-                                    warlockArmor.Insert(2, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
-                                    warlockArmor.Insert(3, itemObject);
-                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Bond")) {
-                                    warlockArmor.Insert(4, itemObject);
-                                }else{
-                                    warlockArmor.Add(itemObject);
+                                int warlockIndex = 0;
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet"))
+                                {
+                                    warlockIndex = Math.Min(0, warlockArmor.Count); // Ensure index is within bounds
                                 }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets"))
+                                {
+                                    warlockIndex = Math.Min(1, warlockArmor.Count); // Ensure index is within bounds
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor"))
+                                {
+                                    warlockIndex = Math.Min(2, warlockArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor"))
+                                {
+                                    warlockIndex = Math.Min(3, warlockArmor.Count);
+                                }
+                                else if (inventoryItemTypeAndTierDisplayName.Contains("Bond"))
+                                {
+                                    warlockIndex = Math.Min(4, warlockArmor.Count);
+                                }
+                                warlockArmor.Add(itemObject);
                                 break;
                             case "Weapon":
                                 if(inventoryItemTierTypeName.Contains("Exotic")){
@@ -459,8 +509,8 @@ public class WeeklyRotatorsTable{
                             }
                         }
                     }
-                    weeklyRotatorTableJson.Add("hunterArmor", hunterArmor);
                     weeklyRotatorTableJson.Add("titanArmor", titanArmor);
+                    weeklyRotatorTableJson.Add("hunterArmor", hunterArmor);
                     weeklyRotatorTableJson.Add("warlockArmor", warlockArmor);
                     weeklyRotatorTableJson.Add("weapons", weapons);      
                     string jsonString = JsonConvert.SerializeObject(weeklyRotatorTableJson);
