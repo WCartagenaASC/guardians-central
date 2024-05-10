@@ -75,9 +75,43 @@ public class InventoryItemDefinitionJson{
         public string? icon { get; set; }
         public bool? hasIcon { get; set; }
     }
+
+    public class Inventory{
+        public long? tierTypeHash { get; set; }
+        public string? tierTypeName { get; set; }
+    }
+    public class SocketEntries{
+        public long? socketTypeHash { get; set; }
+        public long? singleInitialItemHash { get; set; }
+    }
+    public class Sockets{
+        public SocketEntries[]? socketEntries { get; set; }
+    }
     public class Root{
         public DisplayProperties? displayProperties { get; set; }
         public long[]? itemCategoryHashes { get; set; }
+        public long[]? damageTypeHashes { get; set; }
+        public string screenshot { get; set; }
+        public string itemTypeDisplayName { get; set; }
+        public string flavorText { get; set; }
+        public string itemTypeAndTierDisplayName { get; set; }
+        public Inventory? inventory { get; set; }
+        public Sockets? sockets { get; set; }
+    }
+}
+public class DamageTypeMapping{
+    public Dictionary<int, (string Icon, string Name)> Mapping { get; }
+
+    public DamageTypeMapping(){
+        Mapping = new Dictionary<int, (string Icon, string Name)>
+        {
+            { unchecked((int)3373582085), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png", "Kinetic") },
+            { unchecked((int)1847026933), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_2a1773e10968f2d088b97c22b22bba9e.png", "Solar") },
+            { unchecked((int)2303181850), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_092d066688b879c807c3b460afdd61e6.png", "Arc") },
+            { unchecked((int)3454344768), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_ceb2f6197dccf3958bb31cc783eb97a0.png", "Void") },
+            { unchecked((int)151347233), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_530c4c3e7981dc2aefd24fd3293482bf.png", "Stasis") },
+            { unchecked((int)3949783978), ("/common/destiny2_content/icons/DestinyDamageTypeDefinition_b2fe51a94f3533f97079dfa0d27a4096.png", "Strand") }
+        };
     }
 }
 
@@ -245,8 +279,19 @@ public class WeeklyRotatorsTable{
                             }
                         }
                     }
+                    List<long> inventoryItemIntrinsicTraitList = new List<long>();
                     foreach(long itemId in inventoryItemIdList){
-                        using (SqlCommand sqlCommand= new SqlCommand($"SELECT * FROM DestinyInventoryItemDefinition WHERE Id = {itemId}", msSqlConnection)){
+                        inventoryItemIntrinsicTraitList.Clear();
+                        string inventoryItemName = "";
+                        string inventoryItemIcon = "";
+                        string inventoryItemScreenShot = "";
+                        string inventoryItemTypeAndTierDisplayName =  "";
+                        string inventoryItemTierTypeName = "";
+                        string inventoryItemIsCraftable = "";
+                        string inventoryItemType = "";
+                        string damageTypeIcon = "";
+                        string damageTypeName = "";
+                        using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyInventoryItemDefinition WHERE Id = {itemId}", msSqlConnection)){
                             using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                                 while (reader.Read()){
                                     string? inventoryItemDefinitionJson = reader["json"].ToString();
@@ -255,9 +300,37 @@ public class WeeklyRotatorsTable{
                                         inventoryItemDefinitionRoot = JsonConvert.DeserializeObject<InventoryItemDefinitionJson.Root>(inventoryItemDefinitionJson);
                                     }
                                     if (inventoryItemDefinitionRoot != null){
-                                        string inventoryItemName = inventoryItemDefinitionRoot.displayProperties?.name ?? "Unknown";
-                                        string inventoryIcon = inventoryItemDefinitionRoot.displayProperties?.icon ?? "DefaultIcon";
-                                        string inventoryItemType = "";
+                                        inventoryItemName = inventoryItemDefinitionRoot.displayProperties?.name ?? "";
+                                        inventoryItemIcon = inventoryItemDefinitionRoot.displayProperties?.icon ?? "";
+                                        inventoryItemScreenShot = inventoryItemDefinitionRoot.screenshot ?? "";
+                                        inventoryItemTypeAndTierDisplayName = inventoryItemDefinitionRoot.itemTypeAndTierDisplayName ?? "";
+                                        inventoryItemTierTypeName = inventoryItemDefinitionRoot.inventory?.tierTypeName ?? "";
+                                        inventoryItemIsCraftable = "false";
+                                        if (inventoryItemDefinitionRoot.sockets?.socketEntries != null){
+                                            foreach (var socketEntry in inventoryItemDefinitionRoot.sockets.socketEntries){
+                                                if (socketEntry.singleInitialItemHash == 1961918267){ // 1961918267 is a Empty DeepSight Socket Hash
+                                                    inventoryItemIsCraftable = "true";
+                                                }
+                                                if (socketEntry.socketTypeHash == 3956125808){ // Is the Intrinsic Trait Socket Hash
+                                                    if (socketEntry.singleInitialItemHash.HasValue) { // Check if the value is not null
+                                                        long socketTypeId = unchecked((int) socketEntry.singleInitialItemHash);
+                                                        inventoryItemIntrinsicTraitList.Add(socketTypeId); // Add the non-null value
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        int inventoryDamageTypeHash = -1;
+                                        // Checks if the array is null and sets it to an impossible hash if it is
+                                        if (inventoryItemDefinitionRoot.damageTypeHashes != null && inventoryItemDefinitionRoot.damageTypeHashes.Length > 0){
+                                            inventoryDamageTypeHash = (int)inventoryItemDefinitionRoot.damageTypeHashes[0];
+                                        }
+                                        //Checks the mapping to set variables
+                                        var mapping = new DamageTypeMapping();
+                                        if(mapping.Mapping.TryGetValue(inventoryDamageTypeHash, out var result)){
+                                            damageTypeIcon = result.Icon;
+                                            damageTypeName = result.Name;
+                                        }
+
                                                             
                                         if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(22) == true && inventoryItemDefinitionRoot.itemCategoryHashes.Contains(20)){
                                             inventoryItemType = "TitanArmor";
@@ -268,36 +341,87 @@ public class WeeklyRotatorsTable{
                                         } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(1) == true){
                                             inventoryItemType = "Weapon";
                                         }
-                                        Dictionary<string, object> itemObject = new Dictionary<string, object>{
-                                            { inventoryItemName, new Dictionary<string, string>{
-                                                    { "Icon", inventoryIcon }
-                                                }
-                                            }
-                                        };
-                                        if (inventoryItemType != null){
-                                            switch (inventoryItemType){
-                                                case "TitanArmor":
-                                                    titanArmor.Add(itemObject);
-                                                    break;
-                                                case "HunterArmor":
-                                                    hunterArmor.Add(itemObject);
-                                                    break;
-                                                case "WarlockArmor":
-                                                    warlockArmor.Add(itemObject);
-                                                    break;
-                                                case "Weapon":
-                                                    weapons.Add(itemObject);
-                                                    break;
-                                            }
-                                        }
                                     }
                                 }
                             }
                         }
+                        Dictionary<string, object> itemObject = new Dictionary<string, object>();
+                        Dictionary<string, string> innerDictionary = new Dictionary<string, string>{
+                            { "name", inventoryItemName },
+                            { "icon", inventoryItemIcon },
+                            { "screenshot", inventoryItemScreenShot },
+                            { "inventoryTypeAndTierDisplayName", inventoryItemTypeAndTierDisplayName },
+                            { "inventoryTierTypeName", inventoryItemTierTypeName },
+                            { "damageTypeName", damageTypeName },
+                            { "damageTypeIcon", damageTypeIcon },
+                            { "isCraftable", inventoryItemIsCraftable}
+                        };
+
+                        string inventoryItemFrameName = "";
+                        string inventoryItemFrameDescription = "";
+                        string inventoryItemFrameIcon = "";
+                        if(inventoryItemIntrinsicTraitList.Count > 0){
+                            using (SqlCommand findFrameInfo = new SqlCommand($"SELECT * FROM DestinyInventoryItemDefinition WHERE Id = {inventoryItemIntrinsicTraitList[0]}", msSqlConnection)){
+                                using (SqlDataReader findFrameInfoReader = findFrameInfo.ExecuteReader()){
+                                    while (findFrameInfoReader.Read()){
+                                        string? inventoryItemDefinitionJson = findFrameInfoReader["json"].ToString();
+                                        InventoryItemDefinitionJson.Root? inventoryItemDefinitionRoot = null;
+                                        if (inventoryItemDefinitionJson != null){
+                                            inventoryItemDefinitionRoot = JsonConvert.DeserializeObject<InventoryItemDefinitionJson.Root>(inventoryItemDefinitionJson);
+                                        }
+                                        inventoryItemFrameName = inventoryItemDefinitionRoot.displayProperties?.name ?? "";
+                                        inventoryItemFrameDescription = inventoryItemDefinitionRoot.displayProperties?.description ?? "";
+                                        inventoryItemFrameIcon = inventoryItemDefinitionRoot.displayProperties?.icon ?? "";
+                                    }
+                                }
+                            }
+                        }
+                        // Modify the itemObject dictionary to include frame info
+                        innerDictionary.Add("frameName", inventoryItemFrameName);
+                        innerDictionary.Add("frameDescription", inventoryItemFrameDescription);
+                        innerDictionary.Add("frameIcon", inventoryItemFrameIcon);
+
+                        if (inventoryItemType == "TitanArmor" || inventoryItemType == "HunterArmor" || inventoryItemType == "WarlockArmor"){
+                            if (innerDictionary.ContainsKey("isCraftable")){
+                                innerDictionary.Remove("isCraftable");
+                            }
+                            if (innerDictionary.ContainsKey("damageTypeIcon")){
+                                innerDictionary.Remove("damageTypeIcon");
+                            }
+                            if (innerDictionary.ContainsKey("damageTypeName")){
+                                innerDictionary.Remove("damageTypeName");
+                            }
+                            if (innerDictionary.ContainsKey("frameName")){
+                                innerDictionary.Remove("frameName");
+                            }
+                            if (innerDictionary.ContainsKey("frameDescription")){
+                                innerDictionary.Remove("frameDescription");
+                            }
+                            if (innerDictionary.ContainsKey("frameIcon")){
+                                innerDictionary.Remove("frameIcon");
+                            }
+                        }
+                        itemObject.Add(inventoryItemName, innerDictionary);
+                        if (inventoryItemType != null){
+                            switch (inventoryItemType){
+                                case "TitanArmor":
+                                    titanArmor.Add(itemObject);
+                                    break;
+                                case "HunterArmor":
+                                    hunterArmor.Add(itemObject);
+                                    break;
+                                case "WarlockArmor":
+                                    warlockArmor.Add(itemObject);
+                                    break;
+                                case "Weapon":
+                                    weapons.Add(itemObject);
+                                    break;
+                            }
+                        }
                     }
-                    weeklyRotatorTableJson.Add("hunter_armor", hunterArmor);
-                    weeklyRotatorTableJson.Add("titan_armor", titanArmor);
-                    weeklyRotatorTableJson.Add("warlock_armor", warlockArmor);
+                    weeklyRotatorTableJson.Add("hunterArmor", hunterArmor);
+                    weeklyRotatorTableJson.Add("titanArmor", titanArmor);
+                    weeklyRotatorTableJson.Add("warlockArmor", warlockArmor);
                     weeklyRotatorTableJson.Add("weapons", weapons);      
                     string jsonString = JsonConvert.SerializeObject(weeklyRotatorTableJson);
                     using (SqlCommand insertRowCommand = new SqlCommand($"INSERT INTO {tableName} (MilestoneHash, Json) VALUES (@MilestoneHash, @Json)", msSqlConnection)){
@@ -329,3 +453,8 @@ public class WeeklyRotatorsTable{
 // Warlock 21
 // Armor 20
 // Weapon 1
+
+
+//Damage Type Hashes
+// Kinetic
+// Solar
