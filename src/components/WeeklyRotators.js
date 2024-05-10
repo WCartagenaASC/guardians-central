@@ -1,16 +1,10 @@
-
+//MAKE SURE TO CHANGE ENDPOINT BACK TO PROD BEFORE COMMITTING
 import Carousel from 'react-bootstrap/Carousel';
 import './WeeklyRotators.scss'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-const renderItems = (list) => {
-    const result = []
-    for(let i = 0; i < list.length; i++){
-        result.push(<img className="img-fluid wr-img-icon" key={i} src={list[i]} alt={`Item ${i + 1}`} />);
-    }
-    return result
-}
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 const renderText = (list) => {
     const result = []
@@ -49,6 +43,24 @@ const WeeklyRotators = () => {
       };
     }, []);
 
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 600);
+      };
+  
+      // Initial check on mount
+      handleResize();
+  
+      // Add event listener for window resize
+      window.addEventListener('resize', handleResize);
+  
+      // Clean up the event listener on component unmount
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }, []);
 
 
     // Nightfall lists
@@ -80,39 +92,40 @@ const WeeklyRotators = () => {
     ]
 
     //Raid info states
-    const [raidWeaponList, setRaidWeaponList] = useState([]);
-    const [raidTitanArmorList, setRaidTitanArmorList] = useState([]);
-    const [raidHunterArmorList, setRaidHunterArmorList] = useState([]);
-    const [raidWarlockArmorList, setRaidWarlockArmorList] = useState([]);
-    const [raidCosmeticList, setRaidCosmeticList] = useState([]);
+    const [raidWeaponDict, setRaidWeaponDict] = useState({});
+    const [raidTitanArmorDict, setRaidTitanArmorDict] = useState({});
+    const [raidHunterArmorDict, setRaidHunterArmorDict] = useState({});
+    const [raidWarlockArmorDict, setRaidWarlockArmorDict] = useState({});
+    const [raidCosmeticDict, setRaidCosmeticDict] = useState({});
     const [raidName, setRaidName] = useState([]);
     const [raidImage, setRaidImage] = useState([]);
 
     //Exotic Quest info states
-    const [exoticQuestWeaponList, setExoticQuestWeaponList] = useState([]);
-    const [exoticQuestTitanArmorList, setExoticQuestTitanArmorList] = useState([]);
-    const [exoticQuestHunterArmorList, setExoticQuestHunterArmorList] = useState([]);
-    const [exoticQuestWarlockArmorList, setExoticQuestWarlockArmorList] = useState([]);
-    const [exoticQuestCatalystList, setExoticQuestCatalystList] = useState([]);
+    const [exoticQuestWeaponDict, setExoticQuestWeaponDict] = useState({});
+    const [exoticQuestTitanArmorDict, setExoticQuestTitanArmorDict] = useState({});
+    const [exoticQuestHunterArmorDict, setExoticQuestHunterArmorDict] = useState({});
+    const [exoticQuestWarlockArmorDict, setExoticQuestWarlockArmorDict] = useState({});
+    const [exoticQuestCatalystDict, setExoticQuestCatalystDict] = useState({});
     const [exoticQuestName, setExoticQuestName] = useState([]);
     const [exoticQuestImage, setExoticQuestImage] = useState([]);
 
     //Dungeon info states
-    const [dungeonWeaponList, setDungeonWeaponList] = useState([]);
-    const [dungeonTitanArmorList, setDungeonTitanArmorList] = useState([]);
-    const [dungeonHunterArmorList, setDungeonHunterArmorList] = useState([]);
-    const [dungeonWarlockArmorList, setDungeonWarlockArmorList] = useState([]);
-    const [dungeonCosmeticList, setDungeonCosmeticList] = useState([]);
+    const [dungeonWeaponDict, setDungeonWeaponDict] = useState({});
+    const [dungeonTitanArmorDict, setDungeonTitanArmorDict] = useState({});
+    const [dungeonHunterArmorDict, setDungeonHunterArmorDict] = useState({});
+    const [dungeonWarlockArmorDict, setDungeonWarlockArmorDict] = useState({});
+    const [dungeonCosmeticDict, setDungeonCosmeticDict] = useState({});
     const [dungeonName, setDungeonName] = useState([]);
     const [dungeonImage, setDungeonImage] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://guardianscentral.gg/weeklyrotators');
+                //const response = await axios.get('https://guardianscentral.gg/weeklyrotators');
+                const response = await axios.get('http://localhost:8000/weeklyrotators');
                 const data = response.data.getWeeklyRotators;
-
-                // Parse the JSON data and set the lists
+                console.log(data);
+                // Parse the JSON data and set the Dicts
                 data.forEach(item => {
                     const jsonData = JSON.parse(item.Json);
                     const activityType = jsonData.activity_type;
@@ -123,29 +136,54 @@ const WeeklyRotators = () => {
                     const cosmetics = jsonData.cosmetics;
                     const activityName = jsonData.activity_name;
                     const activityImage = jsonData.pcgr_image;
-                    const catalystList = jsonData.catalyst_list;
+                    const catalyst = jsonData.catalyst_list;
 
                     switch (activityType) {
                         case 'Raid':
                             if(weapons != null){
-                                setRaidWeaponList([]);
-                                setRaidWeaponList(prevList => [...prevList, ...weapons.map(weapon => "https://www.bungie.net" + Object.values(weapon)[0].Icon)]);
+                                const weaponDict = {};
+                                weapons.forEach(weaponObj => {
+                                    const weaponName = Object.keys(weaponObj)[0];
+                                    const weaponData = weaponObj[weaponName];
+                                    weaponDict[weaponName] = weaponData;
+                                });
+                                setRaidWeaponDict(weaponDict);
                             };
                             if(titanArmor != null){
-                                setRaidTitanArmorList([]);
-                                setRaidTitanArmorList(prevList => [...prevList, ...titanArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const titanArmorDict = {};
+                                titanArmor.forEach(titanArmorObj => {
+                                    const titanArmorName = Object.keys(titanArmorObj)[0];
+                                    const titanArmorData = titanArmorObj[titanArmorName];
+                                    titanArmorDict[titanArmorName] = titanArmorData;
+                                });
+                                setRaidTitanArmorDict(titanArmorDict);
                             };
                             if(hunterArmor != null){
-                                setRaidHunterArmorList([]);
-                                setRaidHunterArmorList(prevList => [...prevList, ...hunterArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const hunterArmorDict = {};
+                                hunterArmor.forEach(hunterArmorObj => {
+                                    const hunterArmorName = Object.keys(hunterArmorObj)[0];
+                                    const hunterArmorData = hunterArmorObj[hunterArmorName];
+                                    hunterArmorDict[hunterArmorName] = hunterArmorData;
+                                });
+                                setRaidHunterArmorDict(hunterArmorDict);
                             };
                             if(warlockArmor != null){
-                                setRaidWarlockArmorList([]);
-                                setRaidWarlockArmorList(prevList => [...prevList, ...warlockArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const warlockArmorDict = {};
+                                warlockArmor.forEach(warlockArmorObj => {
+                                    const warlockArmorName = Object.keys(warlockArmorObj)[0];
+                                    const warlockArmorData = warlockArmorObj[warlockArmorName];
+                                    warlockArmorDict[warlockArmorName] = warlockArmorData;
+                                });
+                                setRaidWarlockArmorDict(warlockArmorDict);
                             };
                             if(cosmetics != null){
-                                setRaidCosmeticList([])
-                                setRaidCosmeticList(prevList => [...prevList, ...cosmetics.map(cosmetic => "https://www.bungie.net" + Object.values(cosmetic)[0].Icon)]);
+                                const cosmeticDict = {};
+                                cosmetics.forEach(cosmeticObj => {
+                                    const cosmeticName = Object.keys(cosmeticObj)[0];
+                                    const cosmeticData = cosmeticObj[cosmeticName];
+                                    cosmeticDict[cosmeticName] = cosmeticData;
+                                });
+                                setRaidCosmeticDict(cosmeticDict);
                             };
                             if(activityName != null){
                                 setRaidName(activityName);
@@ -156,24 +194,49 @@ const WeeklyRotators = () => {
                             break;
                         case 'Dungeon':
                             if(weapons != null){
-                                setDungeonWeaponList([]);
-                                setDungeonWeaponList(prevList => [...prevList, ...weapons.map(weapon => "https://www.bungie.net" + Object.values(weapon)[0].Icon)]);
+                                const weaponDict = {};
+                                weapons.forEach(weaponObj => {
+                                    const weaponName = Object.keys(weaponObj)[0];
+                                    const weaponData = weaponObj[weaponName];
+                                    weaponDict[weaponName] = weaponData;
+                                });
+                                setDungeonWeaponDict(weaponDict);
                             };
                             if(titanArmor != null){
-                                setDungeonTitanArmorList([]);
-                                setDungeonTitanArmorList(prevList => [...prevList, ...titanArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const titanArmorDict = {};
+                                titanArmor.forEach(titanArmorObj => {
+                                    const titanArmorName = Object.keys(titanArmorObj)[0];
+                                    const titanArmorData = titanArmorObj[titanArmorName];
+                                    titanArmorDict[titanArmorName] = titanArmorData;
+                                });
+                                setDungeonTitanArmorDict(titanArmorDict);
                             };
                             if(hunterArmor != null){
-                                setDungeonHunterArmorList([]);
-                                setDungeonHunterArmorList(prevList => [...prevList, ...hunterArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const hunterArmorDict = {};
+                                hunterArmor.forEach(hunterArmorObj => {
+                                    const hunterArmorName = Object.keys(hunterArmorObj)[0];
+                                    const hunterArmorData = hunterArmorObj[hunterArmorName];
+                                    hunterArmorDict[hunterArmorName] = hunterArmorData;
+                                });
+                                setDungeonHunterArmorDict(hunterArmorDict);
                             };
                             if(warlockArmor != null){    
-                                setDungeonWarlockArmorList([]);
-                                setDungeonWarlockArmorList(prevList => [...prevList, ...warlockArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const warlockArmorDict = {};
+                                warlockArmor.forEach(warlockArmorObj => {
+                                    const warlockArmorName = Object.keys(warlockArmorObj)[0];
+                                    const warlockArmorData = warlockArmorObj[warlockArmorName];
+                                    warlockArmorDict[warlockArmorName] = warlockArmorData;
+                                });
+                                setDungeonWarlockArmorDict(warlockArmorDict);
                             };
                             if(cosmetics != null){
-                                setDungeonCosmeticList([])
-                                setDungeonCosmeticList(prevList => [...prevList, ...cosmetics.map(cosmetic => "https://www.bungie.net" + Object.values(cosmetic)[0].Icon)]);
+                                const cosmeticDict = {};
+                                cosmetics.forEach(cosmeticObj => {
+                                    const cosmeticName = Object.keys(cosmeticObj)[0];
+                                    const cosmeticData = cosmeticObj[cosmeticName];
+                                    cosmeticDict[cosmeticName] = cosmeticData;
+                                });
+                                setDungeonCosmeticDict(cosmeticDict);
                             };
                             if(activityName != null){
                                 setDungeonName(activityName);
@@ -184,25 +247,50 @@ const WeeklyRotators = () => {
                             break;
                         case 'Story':
                             if(weapons != null){
-                                setExoticQuestWeaponList([]);
-                                setExoticQuestWeaponList(prevList => [...prevList, ...weapons.map(weapon => "https://www.bungie.net" + Object.values(weapon)[0].Icon)]);
+                                const weaponDict = {};
+                                weapons.forEach(weaponObj => {
+                                    const weaponName = Object.keys(weaponObj)[0];
+                                    const weaponData = weaponObj[weaponName];
+                                    weaponDict[weaponName] = weaponData;
+                                });
+                                setExoticQuestWeaponDict(weaponDict);
                             };
                             if(titanArmor != null){
-                                setExoticQuestTitanArmorList([]);
-                                setExoticQuestTitanArmorList(prevList => [...prevList, ...titanArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const titanArmorDict = {};
+                                titanArmor.forEach(titanArmorObj => {
+                                    const titanArmorName = Object.keys(titanArmorObj)[0];
+                                    const titanArmorData = titanArmorObj[titanArmorName];
+                                    titanArmorDict[titanArmorName] = titanArmorData;
+                                });
+                                setExoticQuestTitanArmorDict(titanArmorDict);
                             };
 
                             if(hunterArmor != null){
-                                setExoticQuestHunterArmorList([]);
-                                setExoticQuestHunterArmorList(prevList => [...prevList, ...hunterArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const hunterArmorDict = {};
+                                hunterArmor.forEach(hunterArmorObj => {
+                                    const hunterArmorName = Object.keys(hunterArmorObj)[0];
+                                    const hunterArmorData = hunterArmorObj[hunterArmorName];
+                                    hunterArmorDict[hunterArmorName] = hunterArmorData;
+                                });
+                                setExoticQuestHunterArmorDict(hunterArmorDict);
                             };
                             if(warlockArmor != null){
-                                setExoticQuestWarlockArmorList([]);
-                                setExoticQuestWarlockArmorList(prevList => [...prevList, ...warlockArmor.map(armor => "https://www.bungie.net" + Object.values(armor)[0].Icon)]);
+                                const warlockArmorDict = {};
+                                warlockArmor.forEach(warlockArmorObj => {
+                                    const warlockArmorName = Object.keys(warlockArmorObj)[0];
+                                    const warlockArmorData = warlockArmorObj[warlockArmorName];
+                                    warlockArmorDict[warlockArmorName] = warlockArmorData;
+                                });
+                                setExoticQuestWarlockArmorDict(warlockArmorDict);
                             };
-                            if(catalystList != null){
-                                setExoticQuestCatalystList([]);
-                                setExoticQuestCatalystList(prevList => [...prevList, ...catalystList.map(catalyst => "https://www.bungie.net" + Object.values(catalyst)[0].Icon)]);
+                            if(catalyst != null){
+                                const catalystDict = {};
+                                catalyst.forEach(catalystObj => {
+                                    const catalystName = Object.keys(catalystObj)[0];
+                                    const catalystData = catalystObj[catalystName];
+                                    catalystDict[catalystName] = catalystData;
+                                });
+                                setExoticQuestCatalystDict(catalystDict);
                             }
                             if(activityName != null){
                                 setExoticQuestName(activityName);
@@ -223,7 +311,49 @@ const WeeklyRotators = () => {
     
         fetchData();
     }, []);
+    //console.log(raidWeaponList);
+    const [hoveredItem, setHoveredItem] = useState(null);
+
+    const handleMouseEnter = (item) => {
+        setHoveredItem(item);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredItem(null);
+    };
+    // Modify the state to track the clicked item
+    const [clickedItem, setClickedItem] = useState(null);
+
+    // Modify the click event handler
+    const handleClick = (item) => {
+        // Toggle the display of the clicked item
+        setClickedItem(clickedItem === item ? null : item);
+    };
+    const handleClose = () => {
+        setClickedItem(null);
+    };
+    const renderItems = (dict) => {
+        return Object.entries(dict).map(([itemName, itemData]) => (
+            <img 
+                key={itemName} 
+                className="img-fluid wr-img-icon " 
+                src={"https://www.bungie.net" + itemData.Icon} 
+                alt={itemName} 
+                //onMouseEnter={() => handleMouseEnter(itemData)} 
+                //onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick(itemData)} 
+            />
+        ));
+    }
+    const tierTypeColors = {
+        "Legendary": "purple",
+        "Exotic": "#ceae33",
+        "Default": "black"
+    };
+    console.log("Clicked Item:", clickedItem);
+    console.log("tierTypeColors:", tierTypeColors);
     return(
+        <>
           <Carousel>
             <Carousel.Item interval={1000000}>
             <div className='wr-overlay-container'>
@@ -236,25 +366,55 @@ const WeeklyRotators = () => {
                     <div className={`info-container ${isSmallScreen ? 'flex-column' : 'd-inline-flex'}`}>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Weapons</h5>
-                            {renderItems(raidWeaponList)}
+                            {renderItems(raidWeaponDict)}
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Armor</h5>
                             <div className='Titan'>
-                                {renderItems(raidTitanArmorList)}
+                                {renderItems(raidTitanArmorDict)}
                             </div>
                             <div className='Hunter'>
-                                {renderItems(raidHunterArmorList)}
+                                {renderItems(raidHunterArmorDict)}
                             </div>
                             <div className='Warlock'>
-                                {renderItems(raidWarlockArmorList)}
+                                {renderItems(raidWarlockArmorDict)}
                             </div>
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Cosmetics</h5>
-                             {renderItems(raidCosmeticList)}
+                             {renderItems(raidCosmeticDict)}
                         </div>
                     </div>
+                    {clickedItem && !isMobile  &&(
+                        <div className="clicked-item">
+                            <Card className='weapon-info mt-5'>
+                            <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
+                                <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.ScreenShot} />
+                                    <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
+                                        <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
+                                            <h2>{clickedItem.Name}</h2>
+                                            <h5>{clickedItem.itemTypeAndTierDisplayName}</h5>
+                                        </div>
+                                        <div className='p-2'>
+                                            <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['weaponDamageTypeIcon']}/>
+                                        </div>
+                                    </div>
+                                    <div className='d-flex flex-row text-light' style={{background:'#6c757d'}}>
+                                        <div className='p-2'>
+                                            <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['Frame-Icon']}></img>
+                                        </div>
+                                        <div className='align-self-center p-3'>
+                                            <h5>{clickedItem['Frame']}</h5>
+                                            <p>{clickedItem['Frame-Description']}</p>  
+                                        </div>
+                                        <div className='d-flex flex-column align-self-center p-3'>
+                                            <span>RPM </span>
+                                            <span>{clickedItem['RPM']}</span>
+                                        </div>
+                                    </div>
+                            </Card>
+                        </div>
+                    )}
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item interval={1000000}>
@@ -268,23 +428,23 @@ const WeeklyRotators = () => {
                     <div className={`info-container ${isSmallScreen ? 'flex-column' : 'd-inline-flex'}`}>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Weapons</h5>
-                            {renderItems(dungeonWeaponList)}
+                            {renderItems(dungeonWeaponDict)}
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Armor</h5>
                             <div className='Titan'>
-                                {renderItems(dungeonTitanArmorList)}
+                                {renderItems(dungeonTitanArmorDict)}
                             </div>
                             <div className='Hunter'>
-                                {renderItems(dungeonHunterArmorList)}
+                                {renderItems(dungeonHunterArmorDict)}
                             </div>
                             <div className='Warlock'>
-                                {renderItems(dungeonWarlockArmorList)}
+                                {renderItems(dungeonWarlockArmorDict)}
                             </div>
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Cosmetics</h5>
-                             {renderItems(dungeonCosmeticList)}
+                             {renderItems(dungeonCosmeticDict)}
                         </div>
                     </div>
                 </Carousel.Caption>
@@ -301,23 +461,23 @@ const WeeklyRotators = () => {
                     <div className={`info-container ${isSmallScreen ? 'flex-column' : 'd-inline-flex'}`}>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Weapons</h5>
-                            {renderItems(exoticQuestWeaponList)}
+                            {renderItems(exoticQuestWeaponDict)}
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Armor</h5>
                             <div className='Titan'>
-                                {renderItems(exoticQuestTitanArmorList)}
+                                {renderItems(exoticQuestTitanArmorDict)}
                             </div>
                             <div className='Hunter'>
-                                {renderItems(exoticQuestHunterArmorList)}
+                                {renderItems(exoticQuestHunterArmorDict)}
                             </div>
                             <div className='Warlock'>
-                                {renderItems(exoticQuestWarlockArmorList)}
+                                {renderItems(exoticQuestWarlockArmorDict)}
                             </div>
                         </div>
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Catalyst</h5>
-                             {renderItems(exoticQuestCatalystList)}
+                             {renderItems(exoticQuestCatalystDict)}
                         </div>
                     </div>
                 </Carousel.Caption>
@@ -356,6 +516,37 @@ const WeeklyRotators = () => {
             </Carousel.Item>
             */}
           </Carousel>
+            {clickedItem && isMobile && (
+                <div className="clicked-item">
+                    <Card className='weapon-info mt-5'>
+                    <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
+                        <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.ScreenShot} />
+                        <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
+                                <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
+                                    <h2>{clickedItem.Name}</h2>
+                                    <h5>{clickedItem.itemTypeAndTierDisplayName}</h5>
+                                </div>
+                                <div className='p-2'>
+                                    <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['weaponDamageTypeIcon']}/>
+                                </div>
+                            </div>
+                            <div className='d-flex flex-row text-light' style={{background:'#6c757d'}}>
+                                <div className='p-2'>
+                                    <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['Frame-Icon']}></img>
+                                </div>
+                                <div className='align-self-center p-3'>
+                                    <h5>{clickedItem['Frame']}</h5>
+                                    <p>{clickedItem['Frame-Description']}</p>  
+                                </div>
+                                <div className='d-flex flex-column align-self-center p-3'>
+                                    <span>RPM </span>
+                                    <span>{clickedItem['RPM']}</span>
+                                </div>
+                            </div>
+                    </Card>
+                </div>
+            )}
+        </>
           
     );
 }

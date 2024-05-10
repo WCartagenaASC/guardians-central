@@ -5,6 +5,7 @@
 .wr-img-icon{
     width:20%;
     padding: 1px;
+    z-index: 0;
 }
 
 .wr-mods-column-container{
@@ -39,11 +40,34 @@
     background: rgba(0, 0, 0, 0.5); /* Adjust the alpha (last value) to control the overlay transparency */
 }
 
+.clicked-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 100;
+    background-color: rgba(0, 0, 0, 0.15); /* Adjust the opacity as needed */
+    z-index: 1000; /* Ensure the clicked item covers the carousel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.clicked-item .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1001; /* Ensure the close button appears above the clicked item */
+}
+.damage-type-icon{
+    max-width: 50px;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .wr-img-icon{
-        width:25%;
+        width:20%;
         padding: 1px;
     }
     .wr-mod-icon{
@@ -59,7 +83,37 @@
     .wr-mods-column-container h5{
         font-size: 15px;
     }
+    .clicked-item {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        top: 100;
+        width: 100%;
+        z-index: 9999; /* Adjust z-index as needed */
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .clicked-item .weapon-info {
+        margin-bottom: 0; /* Remove bottom margin to prevent extra space */
+    }
+    .weapon-info{
+        h2{
+            font-size: 25px;
+        }
+        h5{
+            font-size: 15px;
+        }
+        p{
+            font-size: 10px; 
+        }
+    }
+    .frame-icon{
+        max-width: 60px;
+    }
+    .damage-type-icon{
+        max-width: 40px;
+    }
 }
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
 
@@ -70,7 +124,6 @@
         width:15%;
         padding: 1px;
     }
-
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
@@ -99,6 +152,9 @@
     .wr-mods-column{
         padding: 10px;
     }
+    .weapon-info{
+        max-width: 75%;
+     }
 }
 
 @media only screen and (min-width: 2200px) {
@@ -115,5 +171,4 @@
     .wr-mods-column{
         padding: 10px;
     }
-
 }

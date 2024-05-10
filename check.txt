@@ -1,0 +1,93 @@
+      "Transfiguration": {
+        "Name":"Transfiguration",Check DONE
+        "Icon": "/common/destiny2_content/icons/4975d25cd6a8ce48ea04f346ee44b1bf.jpg",check DONE
+        "ScreenShot":"/common/destiny2_content/screenshots/3885259140.jpg", check DONE
+        "Craftable":true, check socket for singleInitialItemHash 1961918267 which means empty deepsight socket
+        "Frame":"High-Impact Frame", To get fram infor check socket for singleInitialItemHash and check the has in inventory item definition
+        "Frame-Description":"I am the description of this frame",
+        "Frame-Icon":"/common/destiny2_content/icons/34573143849cf910d2381554bb57a10d.png",
+        "RPM":450, go to stats then go and check this stat hash 4284893193 inside there is a value
+        "itemTypeAndTierDisplayName":"Legendary Scout Rifle", check DONE
+        "tierTypeName":"Legendary",check 
+        "weaponDamageType":"Kinetic", check damageTypeHashes
+        "weaponDamageTypeIcon":"/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png"check damageTypeHashes
+      }
+
+
+
+
+
+      Name DONE
+      Icon DONE
+      ScreenShot DONE
+      Craftable DONE
+      Frame Name DONE
+      Frame Description DONE
+      Frame Icon DONE
+      RPM
+      itemTypeAndTierDisplayName DONE
+      tierTypeName DONE
+      weaponDamageType DONE
+      weaponDamageTypeIcon DONE
+
+      Add FlavorText to weapons and armor
+
+      Make armor go in correct order
+
+
+if (inventoryItemType != null){
+switch (inventoryItemType){
+case "TitanArmor":
+    if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+        titanArmor.Insert(0, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+        titanArmor.Insert(1, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+        titanArmor.Insert(2, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+        titanArmor.Insert(3, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Mark")) {
+        titanArmor.Insert(4, itemObject);
+    }else{
+        titanArmor.Add(itemObject);
+    }
+    break;
+case "HunterArmor":
+    if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+        hunterArmor.Insert(0, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+        hunterArmor.Insert(1, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+        hunterArmor.Insert(2, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+        hunterArmor.Insert(3, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Cloak")) {
+        hunterArmor.Insert(4, itemObject);
+    }else{
+        hunterArmor.Add(itemObject);
+    }
+    break;
+case "WarlockArmor":
+    if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+        warlockArmor.Insert(0, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+        warlockArmor.Insert(1, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+        warlockArmor.Insert(2, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+        warlockArmor.Insert(3, itemObject);
+    } else if (inventoryItemTypeAndTierDisplayName.Contains("Bond")) {
+        warlockArmor.Insert(4, itemObject);
+    }else{
+        warlockArmor.Add(itemObject);
+    }
+    break;
+case "Weapon":
+    if(inventoryItemTierTypeName.Contains("Exotic")){
+        weapons.Insert(0, itemObject);
+    }else{ 
+        weapons.Add(itemObject);
+    }
+    break;
+}
+}

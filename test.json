@@ -1,0 +1,145 @@
+{
+  "icon_url": "/common/destiny2_content/icons/DestinyMilestoneDefinition_56d1f52f0cb40248a990408d7ac84bd3.png",
+  "activity_name": "Last Wish",
+  "pcgr_image": "/img/destiny_content/pgcr/raid_beanstalk.jpg",
+  "activity_type": "Raid",
+  "hunter_armor": [
+    {
+      "Mask of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/3d7149a61cd354d14f8bf6d2133c01b4.jpg"
+      }
+    },
+    {
+      "Grips of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/41a07585959355eab585d13df5583402.jpg"
+      }
+    },
+    {
+      "Strides of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/456e19a43cd50d1cc137b44ba5485e7e.jpg"
+      }
+    },
+    {
+      "Vest of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/937dfec4a744281d46946b0ccd58fb27.jpg"
+      }
+    },
+    {
+      "Cloak of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/03aed4195f29dbfa3024b992af09f2ac.jpg"
+      }
+    }
+  ],
+  "titan_armor": [
+    {
+      "Greaves of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/fa1dbd614568db36bc850b28ae18be11.jpg"
+      }
+    },
+    {
+      "Helm of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/f3cd900df3fdcf0eb24ec42a2f391c31.jpg"
+      }
+    },
+    {
+      "Gauntlets of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/966481b36642098933cb21711cc134d2.jpg"
+      }
+    },
+    {
+      "Mark of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/96f0dfb309fcae47e779f6d27586520a.jpg"
+      }
+    },
+    {
+      "Plate of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/884a53c9d1710e5accb185365675842d.jpg"
+      }
+    }
+  ],
+  "warlock_armor": [
+    {
+      "Robes of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/fb10acf6220b725be2444aba354895e0.jpg"
+      }
+    },
+    {
+      "Boots of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/58b6b1dcdb64322e0d1761c6981bbf55.jpg"
+      }
+    },
+    {
+      "Gloves of the Great Hunt": {
+        "Icon": "/common/destiny2_contsent/icons/9a6c1e477c13bebc658b2e77f84ddac0.jpg"
+      }
+    },
+    {
+      "Hood of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/d67fcc57ea9130643f2020598fc2df85.jpg"
+      }
+    },
+    {
+      "Bond of the Great Hunt": {
+        "Icon": "/common/destiny2_content/icons/42a98e2899a0de554316233b2547c15e.jpg"
+      }
+    }
+  ],
+  "weapons": [
+    {
+      "Transfiguration": {
+        "Name":"Transfiguration",Check DONE
+        "Icon": "/common/destiny2_content/icons/4975d25cd6a8ce48ea04f346ee44b1bf.jpg",check DONE
+        "ScreenShot":"/common/destiny2_content/screenshots/3885259140.jpg", check DONE
+        "Craftable":true, check socket for singleInitialItemHash 1961918267 which means empty deepsight socket
+        "Frame":"High-Impact Frame", To get fram infor check socket for singleInitialItemHash and check the has in inventory item definition
+        "Frame-Description":"I am the description of this frame",
+        "Frame-Icon":"/common/destiny2_content/icons/34573143849cf910d2381554bb57a10d.png",
+        "RPM":450, go to stats then go and check this stat hash 4284893193 inside there is a value
+        "itemTypeAndTierDisplayName":"Legendary Scout Rifle", check DONE
+        "tierTypeName":"Legendary",check 
+        "weaponDamageType":"Kinetic", check damageTypeHashes
+        "weaponDamageTypeIcon":"/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png"check damageTypeHashes
+      }
+    },
+    {
+      "The Supremacy": {
+        "Icon": "/common/destiny2_content/icons/57e762b0f41575efde3deaa79496f628.jpg"
+      }
+    },
+    {
+      "Techeun Force": {
+        "Icon": "/common/destiny2_content/icons/3ddbd72bdfefd1475d069c562ef80747.jpg"
+      }
+    },
+    {
+      "Chattering Bone": {
+        "Icon": "/common/destiny2_content/icons/886c1372ece5e30e6aee0fdfebf65bed.jpg"
+      }
+    },
+    {
+      "One Thousand Voices": {
+        "Icon": "/common/destiny2_content/icons/51c53df606cca474dce3cadbf7d5ce28.jpg"
+      }
+    },
+    {
+      "Age-Old Bond": {
+        "Icon": "/common/destiny2_content/icons/bbcfd3be25a188e62ebc82258ec1009e.jpg"
+      }
+    },
+    {
+      "Tyranny of Heaven": {
+        "Icon": "/common/destiny2_content/icons/b4d39e31c777026b40e6acf2f7c6f720.jpg"
+      }
+    },
+    {
+      "Nation of Beasts": {
+        "Icon": "/common/destiny2_content/icons/02c39ef35d21b77989e1a4cd18e1d076.jpg"
+      }
+    },
+    {
+      "Apex Predator": {
+        "Icon": "/common/destiny2_content/icons/74e3e47ee5478055a662bd4083774119.jpg"
+      }
+    }
+  ]
+}

@@ -404,18 +404,58 @@ public class WeeklyRotatorsTable{
                         itemObject.Add(inventoryItemName, innerDictionary);
                         if (inventoryItemType != null){
                             switch (inventoryItemType){
-                                case "TitanArmor":
+                            case "TitanArmor":
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+                                    titanArmor.Insert(0, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+                                    titanArmor.Insert(1, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+                                    titanArmor.Insert(2, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+                                    titanArmor.Insert(3, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Mark")) {
+                                    titanArmor.Insert(4, itemObject);
+                                }else{
                                     titanArmor.Add(itemObject);
-                                    break;
-                                case "HunterArmor":
+                                }
+                                break;
+                            case "HunterArmor":
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+                                    hunterArmor.Insert(0, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+                                    hunterArmor.Insert(1, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+                                    hunterArmor.Insert(2, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+                                    hunterArmor.Insert(3, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Cloak")) {
+                                    hunterArmor.Insert(4, itemObject);
+                                }else{
                                     hunterArmor.Add(itemObject);
-                                    break;
-                                case "WarlockArmor":
+                                }
+                                break;
+                            case "WarlockArmor":
+                                if (inventoryItemTypeAndTierDisplayName.Contains("Helmet")) {
+                                    warlockArmor.Insert(0, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Gauntlets")) {
+                                    warlockArmor.Insert(1, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Chest Armor")) {
+                                    warlockArmor.Insert(2, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Leg Armor")) {
+                                    warlockArmor.Insert(3, itemObject);
+                                } else if (inventoryItemTypeAndTierDisplayName.Contains("Bond")) {
+                                    warlockArmor.Insert(4, itemObject);
+                                }else{
                                     warlockArmor.Add(itemObject);
-                                    break;
-                                case "Weapon":
+                                }
+                                break;
+                            case "Weapon":
+                                if(inventoryItemTierTypeName.Contains("Exotic")){
+                                    weapons.Insert(0, itemObject);
+                                }else{ 
                                     weapons.Add(itemObject);
-                                    break;
+                                }
+                                break;
                             }
                         }
                     }
