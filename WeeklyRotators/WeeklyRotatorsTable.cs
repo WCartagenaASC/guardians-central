@@ -215,7 +215,7 @@ public class WeeklyRotatorsTable{
                                 
                                 string? iconUrl = milestoneDefinitionRoot?.displayProperties?.icon;
                                 if (iconUrl != null) {
-                                    weeklyRotatorTableJson.Add("icon_url", iconUrl);
+                                    weeklyRotatorTableJson.Add("iconUrl", iconUrl);
                                 }
                             }
                         }
@@ -250,10 +250,10 @@ public class WeeklyRotatorsTable{
                                     activityTypeId = unchecked((int) activityTypeHash);
                                 }
                                 if(activityName != null){
-                                    weeklyRotatorTableJson.Add("activity_name",activityName);
+                                    weeklyRotatorTableJson.Add("activityName",activityName);
                                 }
                                 if(pgcrImage != null){
-                                    weeklyRotatorTableJson.Add("pcgr_image",pgcrImage);
+                                    weeklyRotatorTableJson.Add("pcgrImage",pgcrImage);
                                 }
                             }
                         }
@@ -269,7 +269,7 @@ public class WeeklyRotatorsTable{
                                 }
                                 string? activityType = activityTypeDefinitionRoot?.displayProperties?.name;
                                 if(activityType != null){
-                                    weeklyRotatorTableJson.Add("activity_type", activityType);
+                                    weeklyRotatorTableJson.Add("activityType", activityType);
                                 }
                             }
                         }
