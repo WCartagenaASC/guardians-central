@@ -53,7 +53,7 @@ public class ActivityDefinitionJson{
         public OriginalDisplayProperties? originalDisplayProperties { get; set; }
         public string? pgcrImage { get; set; }
         public long? hash { get; set; }
-        public int activityTypeHash { get; set; }    
+        public int? activityTypeHash { get; set; }    
     }
 
 }
@@ -89,11 +89,11 @@ public class InventoryItemDefinitionJson{
     }
 
     public class Stat{
-        public long statHash { get; set; }
-        public int value { get; set; }
-        public int minimum { get; set; }
-        public int maximum { get; set; }
-        public int displayMaximum { get; set; }
+        public long? statHash { get; set; }
+        public int? value { get; set; }
+        public int? minimum { get; set; }
+        public int? maximum { get; set; }
+        public int? displayMaximum { get; set; }
     }
     public class Stats{
         public Dictionary<long, Stat> stats { get; set; }
@@ -102,15 +102,19 @@ public class InventoryItemDefinitionJson{
         public DisplayProperties? displayProperties { get; set; }
         public long[]? itemCategoryHashes { get; set; }
         public long[]? damageTypeHashes { get; set; }
-        public string screenshot { get; set; }
-        public string itemTypeDisplayName { get; set; }
-        public string flavorText { get; set; }
-        public string itemTypeAndTierDisplayName { get; set; }
+        public string? screenshot { get; set; }
+        public string? secondarySpecial { get; set; }
+        public string? secondaryIcon { get; set; }
+        public string? itemTypeDisplayName { get; set; }
+        public string? flavorText { get; set; }
+        public string? itemTypeAndTierDisplayName { get; set; }
         public Inventory? inventory { get; set; }
         public Sockets? sockets { get; set; }
         public Stats? stats { get; set; }
     }
 }
+
+// C# Mapping for all damage types in destiny 2
 public class DamageTypeMapping{
     public Dictionary<int, (string Icon, string Name)> Mapping { get; }
 
@@ -127,9 +131,10 @@ public class DamageTypeMapping{
     }
 }
 
+// Main Class that builds Weekly Rotators Table
 public class WeeklyRotatorsTable{
     public static void BuildWeeklyRotatorsTable(PublicMilestonesResponse.RootObject PublicMilestonesObject, string Server, string Database, string UserId, string Password){
-        // Create MS SQL Server connection
+        // Create SQL Server connection
         string sqlConnectionString = $"Server={Server};Database={Database};TrustServerCertificate=True;Uid={UserId};Pwd={Password};";
         Log.Information(sqlConnectionString);
         string tableName = "WeeklyRotatorsTable";
@@ -166,6 +171,7 @@ public class WeeklyRotatorsTable{
         long? milestoneHash = null;
         long? milestoneHashInTable = null;
         List<Dictionary<string, object>> weapons = new List<Dictionary<string, object>>();
+        List<Dictionary<string, object>> cosmetics = new List<Dictionary<string, object>>();
         List<Dictionary<string, object>> hunterArmor = new List<Dictionary<string, object>>();
         List<Dictionary<string, object>> warlockArmor = new List<Dictionary<string, object>>();
         List<Dictionary<string, object>> titanArmor = new List<Dictionary<string, object>>();
@@ -181,13 +187,16 @@ public class WeeklyRotatorsTable{
                 }
                 // Empty dictionary to add table information to
                 Dictionary<string, object> weeklyRotatorTableJson = new Dictionary<string, object>();
+                // Loops through found weekly rotators
                 foreach(KeyValuePair<string, PublicMilestonesResponse.Milestone> weeklyRotatorKVP in rawWeeklyRotatorsDictionary){
                     weapons.Clear();
                     hunterArmor.Clear();
                     warlockArmor.Clear();
                     titanArmor.Clear();
+                    cosmetics.Clear();
                     weeklyRotatorTableJson.Clear();
                     var milestoneId = unchecked((int) weeklyRotatorKVP.Value.MilestoneHash);
+                    // Query to find weekly rotator milestone by Id
                     using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyMilestoneDefinition Where Id = {milestoneId}", msSqlConnection)){
                         using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                             while (reader.Read()){
@@ -221,6 +230,7 @@ public class WeeklyRotatorsTable{
                         }
                     }
 
+                    // Query to check if rotator already exist
                     using (SqlCommand checkIfRowExistCommand = new SqlCommand($"SELECT * FROM {tableName} Where MilestoneHash = {milestoneHash}", msSqlConnection)){
                           using (SqlDataReader rowExistreader = checkIfRowExistCommand.ExecuteReader()){
                             while (rowExistreader.Read()){
@@ -229,11 +239,13 @@ public class WeeklyRotatorsTable{
                         }
                     }
 
+                    // If rotator exist it skips this index of the loop
                     if(milestoneHash == milestoneHashInTable){
                         Log.Information($"{milestoneHash} is already in table");
                         continue;
                     }
 
+                    // Query to get Activity Definition using activityId
                     using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyActivityDefinition Where Id = {activityId}", msSqlConnection)){
                         using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                             while (reader.Read()){
@@ -259,6 +271,7 @@ public class WeeklyRotatorsTable{
                         }
                     }
                     
+                    // Query to get activityType Id 
                     using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyActivityTypeDefinition Where Id = {activityTypeId}", msSqlConnection)){
                         using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                             while (reader.Read()){
@@ -275,6 +288,8 @@ public class WeeklyRotatorsTable{
                         }
 
                     }
+
+                    // Query to get all items associated with an activiy names
                     List<long> inventoryItemIdList = new List<long>();
                     using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyCollectibleDefinition WHERE Json LIKE @activityName", msSqlConnection)){
                         sqlCommand.Parameters.AddWithValue("@activityName", "%" + activityName + "%");
@@ -291,6 +306,8 @@ public class WeeklyRotatorsTable{
                             }
                         }
                     }
+
+                    // Loops through all inventory item ids found for the activity
                     List<long> inventoryItemIntrinsicTraitList = new List<long>();
                     foreach(long itemId in inventoryItemIdList){
                         inventoryItemIntrinsicTraitList.Clear();
@@ -304,6 +321,8 @@ public class WeeklyRotatorsTable{
                         string damageTypeIcon = "";
                         string damageTypeName = "";
                         string inventoryItemRpmStat = "";
+
+                        // Finds the inventory item and sets information for it
                         using (SqlCommand sqlCommand = new SqlCommand($"SELECT * FROM DestinyInventoryItemDefinition WHERE Id = {itemId}", msSqlConnection)){
                             using (SqlDataReader reader = sqlCommand.ExecuteReader()){
                                 while (reader.Read()){
@@ -316,6 +335,8 @@ public class WeeklyRotatorsTable{
                                         inventoryItemName = inventoryItemDefinitionRoot.displayProperties?.name ?? "";
                                         inventoryItemIcon = inventoryItemDefinitionRoot.displayProperties?.icon ?? "";
                                         inventoryItemScreenShot = inventoryItemDefinitionRoot.screenshot ?? "";
+                                        inventoryItemSecondaryIcon = inventoryItemDefinitionRoot.secondaryIcon ?? "";
+                                        inventoryItemSecondarySpecial = inventoryItemDefinitionRoot.secondarySpecial ?? "";
                                         inventoryItemTypeAndTierDisplayName = inventoryItemDefinitionRoot.itemTypeAndTierDisplayName ?? "";
                                         inventoryItemTierTypeName = inventoryItemDefinitionRoot.inventory?.tierTypeName ?? "";
                                         inventoryItemIsCraftable = "false";
@@ -359,16 +380,22 @@ public class WeeklyRotatorsTable{
                                             inventoryItemType = "WarlockArmor";
                                         } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(1) == true){
                                             inventoryItemType = "Weapon";
+                                        } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(19) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(42) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(43) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(39) == true){ //Emblem, Ship, Sparrow, Ghost
+                                            inventoryItemType = "Cosmetics";
                                         }
                                     }
                                 }
                             }
                         }
+
+                        // Starts building dictionary/Json object string
                         Dictionary<string, object> itemObject = new Dictionary<string, object>();
                         Dictionary<string, string> innerDictionary = new Dictionary<string, string>{
                             { "name", inventoryItemName },
                             { "icon", inventoryItemIcon },
                             { "screenshot", inventoryItemScreenShot },
+                            { "secondaryIcon", inventoryItemSecondaryIcon },
+                            { "secondarySpecial", inventoryItemSecondarySpecial },
                             { "typeAndTierDisplayName", inventoryItemTypeAndTierDisplayName },
                             { "tierTypeName", inventoryItemTierTypeName },
                             { "damageTypeName", damageTypeName },
@@ -377,6 +404,7 @@ public class WeeklyRotatorsTable{
                             { "rpmStat", inventoryItemRpmStat}
                         };
 
+                        // This is for weapons. It checks if inventory item has an intrinisic frame and then looks for information on it
                         string inventoryItemFrameName = "";
                         string inventoryItemFrameDescription = "";
                         string inventoryItemFrameIcon = "";
@@ -396,11 +424,13 @@ public class WeeklyRotatorsTable{
                                 }
                             }
                         }
+
                         // Modify the itemObject dictionary to include frame info
                         innerDictionary.Add("frameName", inventoryItemFrameName);
                         innerDictionary.Add("frameDescription", inventoryItemFrameDescription);
                         innerDictionary.Add("frameIcon", inventoryItemFrameIcon);
 
+                        // Checks if Item is an armor and removes uneccessary info
                         if (inventoryItemType == "TitanArmor" || inventoryItemType == "HunterArmor" || inventoryItemType == "WarlockArmor"){
                             if (innerDictionary.ContainsKey("isCraftable")){
                                 innerDictionary.Remove("isCraftable");
@@ -423,7 +453,25 @@ public class WeeklyRotatorsTable{
                             if (innerDictionary.ContainsKey("rpmStat")){
                                 innerDictionary.Remove("rpmStat");
                             }
+                            if (innerDictionary.ContainsKey("secondarySpecial")){
+                                innerDictionary.Remove("secondarySpecial");
+                            }
+                            if (innerDictionary.ContainsKey("secondaryIcon")){
+                                innerDictionary.Remove("secondaryIcon");
+                            }
                         }
+
+                        // Checks if Item is a weapon  and removes uneccessary info
+                        if (inventoryItemType == "Weapon"){
+                            if (innerDictionary.ContainsKey("secondarySpecial")){
+                                innerDictionary.Remove("secondarySpecial");
+                            }
+                            if (innerDictionary.ContainsKey("secondaryIcon")){
+                                innerDictionary.Remove("secondaryIcon");
+                            }
+                        }
+
+                        // Adds dictionary and item name to an object and then appends that to a list
                         itemObject.Add(inventoryItemName, innerDictionary);
                         if (inventoryItemType != null){
                             switch (inventoryItemType){
@@ -506,13 +554,25 @@ public class WeeklyRotatorsTable{
                                     weapons.Add(itemObject);
                                 }
                                 break;
+                            case "Cosmetics":
+                                if(inventoryItemTierTypeName.Contains("Exotic")){
+                                    cosmetics.Insert(0, itemObject);
+                                }else{ 
+                                    cosmetics.Add(itemObject);
+                                }
+                                break;
                             }
                         }
                     }
+
+                    // Puts together all the list and builds one big json object
                     weeklyRotatorTableJson.Add("titanArmor", titanArmor);
                     weeklyRotatorTableJson.Add("hunterArmor", hunterArmor);
                     weeklyRotatorTableJson.Add("warlockArmor", warlockArmor);
-                    weeklyRotatorTableJson.Add("weapons", weapons);      
+                    weeklyRotatorTableJson.Add("weapons", weapons);
+                    weeklyRotatorTableJson.Add("cosmetics", cosmetics);
+
+                    // Serializes object to convert to string and inserts it into the table       
                     string jsonString = JsonConvert.SerializeObject(weeklyRotatorTableJson);
                     using (SqlCommand insertRowCommand = new SqlCommand($"INSERT INTO {tableName} (MilestoneHash, Json) VALUES (@MilestoneHash, @Json)", msSqlConnection)){
                         // Set parameter values and execute query
