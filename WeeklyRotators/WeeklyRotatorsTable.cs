@@ -314,6 +314,8 @@ public class WeeklyRotatorsTable{
                         string inventoryItemName = "";
                         string inventoryItemIcon = "";
                         string inventoryItemScreenShot = "";
+                        string inventoryItemSecondaryIcon = "";
+                        string inventoryItemSecondarySpecial  = "";
                         string inventoryItemTypeAndTierDisplayName =  "";
                         string inventoryItemTierTypeName = "";
                         string inventoryItemIsCraftable = "";
@@ -380,7 +382,7 @@ public class WeeklyRotatorsTable{
                                             inventoryItemType = "WarlockArmor";
                                         } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(1) == true){
                                             inventoryItemType = "Weapon";
-                                        } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(19) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(42) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(43) || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(39) == true){ //Emblem, Ship, Sparrow, Ghost
+                                        } else if (inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(19) == true  || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(42)  == true || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(43)  == true || inventoryItemDefinitionRoot.itemCategoryHashes?.Contains(39) == true){ //Emblem, Ship, Sparrow, Ghost
                                             inventoryItemType = "Cosmetics";
                                         }
                                     }
