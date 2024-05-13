@@ -128,15 +128,15 @@ const WeeklyRotators = () => {
                 // Parse the JSON data and set the Dicts
                 data.forEach(item => {
                     const jsonData = JSON.parse(item.Json);
-                    const activityType = jsonData.activity_type;
+                    const activityType = jsonData.activityType;
                     const weapons = jsonData.weapons;
-                    const titanArmor = jsonData.titan_armor;
-                    const hunterArmor = jsonData.hunter_armor;
-                    const warlockArmor = jsonData.warlock_armor;
+                    const titanArmor = jsonData.titanArmor;
+                    const hunterArmor = jsonData.hunterArmor;
+                    const warlockArmor = jsonData.warlockArmor;
                     const cosmetics = jsonData.cosmetics;
-                    const activityName = jsonData.activity_name;
-                    const activityImage = jsonData.pcgr_image;
-                    const catalyst = jsonData.catalyst_list;
+                    const activityName = jsonData.activityName;
+                    const activityImage = jsonData.pcgrImage;
+                    const catalyst = jsonData.catalystList;
 
                     switch (activityType) {
                         case 'Raid':
@@ -337,7 +337,7 @@ const WeeklyRotators = () => {
             <img 
                 key={itemName} 
                 className="img-fluid wr-img-icon " 
-                src={"https://www.bungie.net" + itemData.Icon} 
+                src={"https://www.bungie.net" + itemData.icon} 
                 alt={itemName} 
                 //onMouseEnter={() => handleMouseEnter(itemData)} 
                 //onMouseLeave={handleMouseLeave}
@@ -389,27 +389,27 @@ const WeeklyRotators = () => {
                         <div className="clicked-item">
                             <Card className='weapon-info mt-5'>
                             <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
-                                <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.ScreenShot} />
+                                <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
                                     <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
                                         <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
-                                            <h2>{clickedItem.Name}</h2>
-                                            <h5>{clickedItem.itemTypeAndTierDisplayName}</h5>
+                                            <h2>{clickedItem.name}</h2>
+                                            <h5>{clickedItem.typeAndTierDisplayName}</h5>
                                         </div>
                                         <div className='p-2'>
-                                            <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['weaponDamageTypeIcon']}/>
+                                            <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']}/>
                                         </div>
                                     </div>
-                                    <div className='d-flex flex-row text-light' style={{background:'#6c757d'}}>
+                                    <div className='d-flex flex-row text-light justify-content-between' style={{background:'#6c757d'}}>
                                         <div className='p-2'>
-                                            <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['Frame-Icon']}></img>
+                                            <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']}></img>
                                         </div>
                                         <div className='align-self-center p-3'>
-                                            <h5>{clickedItem['Frame']}</h5>
-                                            <p>{clickedItem['Frame-Description']}</p>  
+                                            <h5>{clickedItem['frameName']}</h5>
+                                            <p>{clickedItem['frameDescription']}</p>  
                                         </div>
                                         <div className='d-flex flex-column align-self-center p-3'>
                                             <span>RPM </span>
-                                            <span>{clickedItem['RPM']}</span>
+                                            <span>{clickedItem['rpmStat']}</span>
                                         </div>
                                     </div>
                             </Card>
@@ -520,27 +520,27 @@ const WeeklyRotators = () => {
                 <div className="clicked-item">
                     <Card className='weapon-info mt-5'>
                     <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
-                        <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.ScreenShot} />
+                        <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
                         <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
                                 <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
-                                    <h2>{clickedItem.Name}</h2>
-                                    <h5>{clickedItem.itemTypeAndTierDisplayName}</h5>
+                                    <h2>{clickedItem.name}</h2>
+                                    <h5>{clickedItem.typeAndTierDisplayName}</h5>
                                 </div>
                                 <div className='p-2'>
-                                    <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['weaponDamageTypeIcon']}/>
+                                    <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']}/>
                                 </div>
                             </div>
                             <div className='d-flex flex-row text-light' style={{background:'#6c757d'}}>
                                 <div className='p-2'>
-                                    <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['Frame-Icon']}></img>
+                                    <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']}></img>
                                 </div>
                                 <div className='align-self-center p-3'>
-                                    <h5>{clickedItem['Frame']}</h5>
-                                    <p>{clickedItem['Frame-Description']}</p>  
+                                    <h5>{clickedItem['frameName']}</h5>
+                                    <p>{clickedItem['frameDescription']}</p>  
                                 </div>
                                 <div className='d-flex flex-column align-self-center p-3'>
                                     <span>RPM </span>
-                                    <span>{clickedItem['RPM']}</span>
+                                    <span>{clickedItem['rpmStat']}</span>
                                 </div>
                             </div>
                     </Card>

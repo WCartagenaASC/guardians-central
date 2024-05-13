@@ -1,253 +1,74 @@
 {
-  "icon_url": "/common/destiny2_content/icons/DestinyMilestoneDefinition_427561ad3d02d80a76a9cce7802c1323.png",
-  "activity_name": "Deep Stone Crypt",
-  "pcgr_image": "/img/destiny_content/pgcr/europa-raid-deep-stone-crypt.jpg",
-  "activity_type": "Raid",
-  "hunterArmor": [
-    {
-      "Legacy's Oath Grips": {
-        "name": "Legacy's Oath Grips",
-        "icon": "/common/destiny2_content/icons/2fb3a18d334cc836c63e916120b84381.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2343515647.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Gauntlets",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Strides": {
-        "name": "Legacy's Oath Strides",
-        "icon": "/common/destiny2_content/icons/13bdf076be15bb6d00b4973da60ddfb9.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/1264765761.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Leg Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Cloak": {
-        "name": "Legacy's Oath Cloak",
-        "icon": "/common/destiny2_content/icons/61c552eeec49e985fc0b130aa17da805.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/1021060724.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Hunter Cloak",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Mask": {
-        "name": "Legacy's Oath Mask",
-        "icon": "/common/destiny2_content/icons/df1b5f30b9f8f0f3de16d8f91524ac4f.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/893751566.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Helmet",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Vest": {
-        "name": "Legacy's Oath Vest",
-        "icon": "/common/destiny2_content/icons/d71f8d103ff809c856f2b80d54d6b11a.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/4001862073.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Chest Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    }
-  ],
-  "titanArmor": [
-    {
-      "Legacy's Oath Helm": {
-        "name": "Legacy's Oath Helm",
-        "icon": "/common/destiny2_content/icons/2e43c0325063750172c6c51b1ef0a85b.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/3015085684.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Helmet",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Gauntlets": {
-        "name": "Legacy's Oath Gauntlets",
-        "icon": "/common/destiny2_content/icons/d874653d69ca08699f4f9893a66979f5.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/1887490701.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Gauntlets",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Greaves": {
-        "name": "Legacy's Oath Greaves",
-        "icon": "/common/destiny2_content/icons/bdd939c72721db01184cdd4ea512d9ca.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2558289743.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Leg Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Plate": {
-        "name": "Legacy's Oath Plate",
-        "icon": "/common/destiny2_content/icons/9ed0ee27a295dddad1e5cd070446c5b8.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/751162931.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Chest Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Mark": {
-        "name": "Legacy's Oath Mark",
-        "icon": "/common/destiny2_content/icons/75f481aa2758181c7f71d594a31f6066.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2956588906.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Titan Mark",
-        "inventoryTierTypeName": "Legendary"
-      }
-    }
-  ],
-  "warlockArmor": [
-    {
-      "Legacy's Oath Bond": {
-        "name": "Legacy's Oath Bond",
-        "icon": "/common/destiny2_content/icons/7cae3eb18f9352a0c7b3765357c24dc5.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2902277629.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Warlock Bond",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Cowl": {
-        "name": "Legacy's Oath Cowl",
-        "icon": "/common/destiny2_content/icons/1862f38a8fb74634082cbed46761e94b.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/1462908657.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Helmet",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Robes": {
-        "name": "Legacy's Oath Robes",
-        "icon": "/common/destiny2_content/icons/2518a7bba9de2ced04ef2b5631655a2d.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/3975122240.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Chest Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Gloves": {
-        "name": "Legacy's Oath Gloves",
-        "icon": "/common/destiny2_content/icons/bd15c2dbf85a4d8dd9888843fffcd118.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/79460168.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Gauntlets",
-        "inventoryTierTypeName": "Legendary"
-      }
-    },
-    {
-      "Legacy's Oath Boots": {
-        "name": "Legacy's Oath Boots",
-        "icon": "/common/destiny2_content/icons/a1e39c6f259c2ab40190a1dc0412dddf.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/756445218.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Leg Armor",
-        "inventoryTierTypeName": "Legendary"
-      }
-    }
-  ],
+  "icon_url": "/common/destiny2_content/icons/DestinyMilestoneDefinition_fbba06b79fd1752af47e133cce7a3f45.png",
+  "activity_name": "Vox Obscura",
+  "pcgr_image": "/img/destiny_content/pgcr/exotic_mission_chrome.jpg",
+  "activity_type": "Story",
+  "titanArmor": [],
+  "hunterArmor": [],
+  "warlockArmor": [],
   "weapons": [
     {
-      "Trustee": {
-        "name": "Trustee",
-        "icon": "/common/destiny2_content/icons/575aa36e701cfc4fe4e62a83f423ae97.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/1392919471.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Scout Rifle",
-        "inventoryTierTypeName": "Legendary",
-        "damageTypeName": "Solar",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_2a1773e10968f2d088b97c22b22bba9e.png",
-        "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
-      }
-    },
-    {
-      "Commemoration": {
-        "name": "Commemoration",
-        "icon": "/common/destiny2_content/icons/9820c9c3714bdd7f6fb7c2b83143041b.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/4230965989.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Machine Gun",
-        "inventoryTierTypeName": "Legendary",
+      "Dead Messenger": {
+        "name": "Dead Messenger",
+        "icon": "/common/destiny2_content/icons/0824b34bb37e0bb7c32b91adf6dcb79e.jpg",
+        "screenshot": "/common/destiny2_content/screenshots/46125926.jpg",
+        "inventoryTypeAndTierDisplayName": "Exotic Grenade Launcher",
+        "inventoryTierTypeName": "Exotic",
         "damageTypeName": "Void",
         "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_ceb2f6197dccf3958bb31cc783eb97a0.png",
         "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
+        "rpmStat": "72",
+        "frameName": "Trinary Vision",
+        "frameDescription": "One-shot handheld Grenade Launcher. Projectiles release a fan of three energy waves on contact with the ground.",
+        "frameIcon": "/common/destiny2_content/icons/a513ecb3fc543444e73f99e1f5ab186b.png"
       }
     },
     {
-      "Posterity": {
-        "name": "Posterity",
-        "icon": "/common/destiny2_content/icons/90586409f639d65ee1c91fbce534aa81.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/3281285075.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Hand Cannon",
-        "inventoryTierTypeName": "Legendary",
-        "damageTypeName": "Arc",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_092d066688b879c807c3b460afdd61e6.png",
-        "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
-      }
-    },
-    {
-      "Bequest": {
-        "name": "Bequest",
-        "icon": "/common/destiny2_content/icons/c51dd26c9db21b789afa7d24d96e39fa.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/3366545721.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Sword",
-        "inventoryTierTypeName": "Legendary",
-        "damageTypeName": "Arc",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_092d066688b879c807c3b460afdd61e6.png",
-        "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
-      }
-    },
-    {
-      "Eyes of Tomorrow": {
-        "name": "Eyes of Tomorrow",
-        "icon": "/common/destiny2_content/icons/9caeff89015f02ad52e6fefe95398b01.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2399110176.jpg",
-        "inventoryTypeAndTierDisplayName": "Exotic Rocket Launcher",
+      "Osteo Striga": {
+        "name": "Osteo Striga",
+        "icon": "/common/destiny2_content/icons/2752ee2761149f004df20e78749c1bab.jpg",
+        "screenshot": "/common/destiny2_content/screenshots/46524085.jpg",
+        "inventoryTypeAndTierDisplayName": "Exotic Submachine Gun",
         "inventoryTierTypeName": "Exotic",
-        "damageTypeName": "Solar",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_2a1773e10968f2d088b97c22b22bba9e.png",
+        "damageTypeName": "Kinetic",
+        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png",
         "isCraftable": "false",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
+        "rpmStat": "600",
+        "frameName": "Screaming Swarm",
+        "frameDescription": "Fires a stream of sentient, toxic projectiles that track the targeted enemy.",
+        "frameIcon": "/common/destiny2_content/icons/cbd704c7339e678a447f22a83bf67b61.png"
       }
     },
     {
-      "Heritage": {
-        "name": "Heritage",
-        "icon": "/common/destiny2_content/icons/07619f9f7115a2295c080f08179deb98.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/4248569242.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Shotgun",
-        "inventoryTierTypeName": "Legendary",
-        "damageTypeName": "Kinetic",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png",
+      "Dead Messenger": {
+        "name": "Dead Messenger",
+        "icon": "/common/destiny2_content/icons/0824b34bb37e0bb7c32b91adf6dcb79e.jpg",
+        "screenshot": "/common/destiny2_content/screenshots/46125926.jpg",
+        "inventoryTypeAndTierDisplayName": "Exotic Grenade Launcher",
+        "inventoryTierTypeName": "Exotic",
+        "damageTypeName": "Void",
+        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_ceb2f6197dccf3958bb31cc783eb97a0.png",
         "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
+        "rpmStat": "72",
+        "frameName": "Trinary Vision",
+        "frameDescription": "One-shot handheld Grenade Launcher. Projectiles release a fan of three energy waves on contact with the ground.",
+        "frameIcon": "/common/destiny2_content/icons/a513ecb3fc543444e73f99e1f5ab186b.png"
       }
     },
     {
-      "Succession": {
-        "name": "Succession",
-        "icon": "/common/destiny2_content/icons/86b418d0b9f753883931354137ede858.jpg",
-        "screenshot": "/common/destiny2_content/screenshots/2990047042.jpg",
-        "inventoryTypeAndTierDisplayName": "Legendary Sniper Rifle",
-        "inventoryTierTypeName": "Legendary",
-        "damageTypeName": "Kinetic",
-        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_3385a924fd3ccb92c343ade19f19a370.png",
-        "isCraftable": "true",
-        "frameName": "Rapid-Fire Frame",
-        "frameDescription": "Fires full auto with deeper ammo reserves. Faster reload when weapon is empty.",
-        "frameIcon": "/common/destiny2_content/icons/801d62d1f9783bee81d5700c54c24fda.png"
+      "Dead Messenger": {
+        "name": "Dead Messenger",
+        "icon": "/common/destiny2_content/icons/0824b34bb37e0bb7c32b91adf6dcb79e.jpg",
+        "screenshot": "/common/destiny2_content/screenshots/2812324401.jpg",
+        "inventoryTypeAndTierDisplayName": "Exotic Grenade Launcher",
+        "inventoryTierTypeName": "Exotic",
+        "damageTypeName": "Void",
+        "damageTypeIcon": "/common/destiny2_content/icons/DestinyDamageTypeDefinition_ceb2f6197dccf3958bb31cc783eb97a0.png",
+        "isCraftable": "false",
+        "rpmStat": "72",
+        "frameName": "Trinary Vision",
+        "frameDescription": "One-shot handheld Grenade Launcher. Projectiles release a fan of three energy waves on contact with the ground.",
+        "frameIcon": "/common/destiny2_content/icons/a513ecb3fc543444e73f99e1f5ab186b.png"
       }
     }
   ]

@@ -46,7 +46,7 @@
     left: 0;
     right: 0;
     bottom: 100;
-    background-color: rgba(0, 0, 0, 0.15); /* Adjust the opacity as needed */
+    background-color: rgba(0, 0, 0, 0); /* Adjust the opacity as needed */
     z-index: 1000; /* Ensure the clicked item covers the carousel */
     display: flex;
     justify-content: center;
