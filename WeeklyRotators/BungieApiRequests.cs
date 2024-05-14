@@ -82,7 +82,7 @@ public class BungieApiRequests{
 }
 
 
-                //Console.WriteLine(JsonConvert.SerializeObject(publicMilestonesObject.Response["213479068"]));
-                // Serializes publicMilestonesObject to Json
-                //string publicMilestoneJson = JsonConvert.SerializeObject(publicMilestonesObject);
-                //Console.WriteLine(publicMilestonesObject.Response);
+//Console.WriteLine(JsonConvert.SerializeObject(publicMilestonesObject.Response["213479068"]));
+// Serializes publicMilestonesObject to Json
+//string publicMilestoneJson = JsonConvert.SerializeObject(publicMilestonesObject);
+//Console.WriteLine(publicMilestonesObject.Response);
