@@ -2,9 +2,9 @@ import React from "react"
 import './Accordian.scss';
 import Accordion from 'react-bootstrap/Accordion';
 import WeeklyRotators from "./WeeklyRotators";
-import LostSector from "./LostSector";
-import BansheeAda from "./BansheeAda";
-import SeasonReport from "./SeasonReport";
+// import LostSector from "./LostSector";
+// import BansheeAda from "./BansheeAda";
+// import SeasonReport from "./SeasonReport";
 const HomeAccordian = () =>{
     return(
       //defaultActiveKey Forces first slide to be open. This can be removed when other accordian items are deployed
