@@ -6,22 +6,6 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-const renderText = (list) => {
-    const result = []
-    for(let i = 0; i < list.length; i++){
-        let key = Object.keys(list[i])[0];
-        let value = list[i][key];
-        result.push(
-            <div className='wr-mods-column' key={i}>
-                <img className='wr-mod-icon' key={i} src={value} alt={`Item ${i + 1}`}></img>
-                <span className='wr-mod-text'>{key}</span>
-            </div>
-        );
-    }
-    return result
-}
-
-
 const WeeklyRotators = () => {
 
     const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -62,35 +46,6 @@ const WeeklyRotators = () => {
       };
     }, []);
 
-
-    // Nightfall lists
-    let weeklyNightfallLoot = ["https://www.bungie.net/common/destiny2_content/icons/1a4382dd6c3cbc134f2d276c0ff63c7e.jpg","https://www.bungie.net/common/destiny2_content/icons/1a4382dd6c3cbc134f2d276c0ff63c7e.jpg"]
-    let nightfallHeroMods = [
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"}
-
-    ]
-    let nightfallLegendMods = [
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"}
-    ]
-    let nightfallMasterMods = [
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"},
-        {'Empath':"https://www.bungie.net/common/destiny2_content/icons/6c9052b8fcaea41c2c858c39cf504687.png"}
-    ]
-
     //Raid info states
     const [raidWeaponDict, setRaidWeaponDict] = useState({});
     const [raidTitanArmorDict, setRaidTitanArmorDict] = useState({});
@@ -124,7 +79,7 @@ const WeeklyRotators = () => {
                 //const response = await axios.get('https://guardianscentral.gg/weeklyrotators');
                 const response = await axios.get('http://localhost:8000/weeklyrotators');
                 const data = response.data.getWeeklyRotators;
-                console.log(data);
+                //console.log(data);
                 // Parse the JSON data and set the Dicts
                 data.forEach(item => {
                     const jsonData = JSON.parse(item.Json);
@@ -136,7 +91,7 @@ const WeeklyRotators = () => {
                     const cosmetics = jsonData.cosmetics;
                     const activityName = jsonData.activityName;
                     const activityImage = jsonData.pcgrImage;
-                    const catalyst = jsonData.catalystList;
+                    const catalyst = jsonData.catalysts;
 
                     switch (activityType) {
                         case 'Raid':
@@ -311,16 +266,7 @@ const WeeklyRotators = () => {
     
         fetchData();
     }, []);
-    //console.log(raidWeaponList);
-    const [hoveredItem, setHoveredItem] = useState(null);
 
-    const handleMouseEnter = (item) => {
-        setHoveredItem(item);
-    };
-
-    const handleMouseLeave = () => {
-        setHoveredItem(null);
-    };
     // Modify the state to track the clicked item
     const [clickedItem, setClickedItem] = useState(null);
 
@@ -339,8 +285,6 @@ const WeeklyRotators = () => {
                 className="img-fluid wr-img-icon " 
                 src={"https://www.bungie.net" + itemData.icon} 
                 alt={itemName} 
-                //onMouseEnter={() => handleMouseEnter(itemData)} 
-                //onMouseLeave={handleMouseLeave}
                 onClick={() => handleClick(itemData)} 
             />
         ));
@@ -350,14 +294,12 @@ const WeeklyRotators = () => {
         "Exotic": "#ceae33",
         "Default": "black"
     };
-    console.log("Clicked Item:", clickedItem);
-    console.log("tierTypeColors:", tierTypeColors);
     return(
         <>
           <Carousel>
             <Carousel.Item interval={1000000}>
             <div className='wr-overlay-container'>
-                    <img className="carousel-img-transform" src={"https://www.bungie.net" + raidImage} alt="Background" />
+                    <img className="carousel-img-transform" src={"https://www.bungie.net" + raidImage} alt={raidName + " Background"} />
                     <div className='wr-overlay'></div>
                 </div>
                 <Carousel.Caption className='top-0 wr-overlay-text fw-bold overflow-auto'>
@@ -385,41 +327,11 @@ const WeeklyRotators = () => {
                              {renderItems(raidCosmeticDict)}
                         </div>
                     </div>
-                    {clickedItem && !isMobile  &&(
-                        <div className="clicked-item">
-                            <Card className='weapon-info mt-5'>
-                            <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
-                                <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
-                                    <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
-                                        <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
-                                            <h2>{clickedItem.name}</h2>
-                                            <h5>{clickedItem.typeAndTierDisplayName}</h5>
-                                        </div>
-                                        <div className='p-2'>
-                                            <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']}/>
-                                        </div>
-                                    </div>
-                                    <div className='d-flex flex-row text-light justify-content-between' style={{background:'#6c757d'}}>
-                                        <div className='p-2'>
-                                            <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']}></img>
-                                        </div>
-                                        <div className='align-self-center p-3'>
-                                            <h5>{clickedItem['frameName']}</h5>
-                                            <p>{clickedItem['frameDescription']}</p>  
-                                        </div>
-                                        <div className='d-flex flex-column align-self-center p-3'>
-                                            <span>RPM </span>
-                                            <span>{clickedItem['rpmStat']}</span>
-                                        </div>
-                                    </div>
-                            </Card>
-                        </div>
-                    )}
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item interval={1000000}>
             <div className='wr-overlay-container'>
-                    <img className="carousel-img-transform" src={"https://www.bungie.net" + dungeonImage} alt="Background" />
+                    <img className="carousel-img-transform" src={"https://www.bungie.net" + dungeonImage} alt={raidName + " Background"} />
                     <div className='wr-overlay'></div>
                 </div>
                 <Carousel.Caption className='top-0 wr-overlay-text fw-bold overflow-auto'>
@@ -442,16 +354,18 @@ const WeeklyRotators = () => {
                                 {renderItems(dungeonWarlockArmorDict)}
                             </div>
                         </div>
-                        <div className='wr-img-column-container px-1'>
-                            <h5 className='fw-bold'>Cosmetics</h5>
-                             {renderItems(dungeonCosmeticDict)}
-                        </div>
+                        {Object.keys(dungeonCosmeticDict).length > 0 && (
+                            <div className='wr-img-column-container px-1'>
+                                <h5 className='fw-bold'>Cosmetics</h5>
+                                {renderItems(dungeonCosmeticDict)}
+                            </div> 
+                        )}
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item interval={1000000}>
             <div className='wr-overlay-container'>
-                    <img className="carousel-img-transform" src={"https://www.bungie.net" + exoticQuestImage} alt="Background" />
+                    <img className="carousel-img-transform" src={"https://www.bungie.net" + exoticQuestImage} alt={raidName + " Background"} />
                     <div className='wr-overlay'></div>
                 </div>
                 <Carousel.Caption className='top-0 wr-overlay-text fw-bold overflow-auto'>
@@ -475,77 +389,125 @@ const WeeklyRotators = () => {
                                 {renderItems(exoticQuestWarlockArmorDict)}
                             </div>
                         </div>
+                        {Object.keys(exoticQuestCatalystDict).length > 0 && (
                         <div className='wr-img-column-container px-1'>
                             <h5 className='fw-bold'>Catalyst</h5>
                              {renderItems(exoticQuestCatalystDict)}
                         </div>
+                        )}
                     </div>
                 </Carousel.Caption>
             </Carousel.Item>
-            {/* Activate when ready */}
-            {/*
-            <Carousel.Item interval={1000000}>
-                <div className='wr-overlay-container'>
-                    <img className="carousel-img-transform" src="https://www.bungie.net/img/destiny_content/pgcr/raid_kings_fall.jpg" alt="Background" />
-                    <div className='wr-overlay'></div>
-                </div>
-                <Carousel.Caption className='top-0 wr-overlay-text fw-bold overflow-auto'>
-                    <h2 className='fw-bold'>Weekly Nightfall</h2>
-                    <h3 className='fw-bold'>Nightfall Name</h3>
-                    <div className='info-container d-inline-flex px-2'>
-                        <div className='wr-mods-column-container'>
-                            <h5 className='fw-bold'>Weekly Loot</h5>
-                            {renderItems(weeklyNightfallLoot)}
-                        </div>
-                    </div>
-                    <div className='info-container d-inline-flex' >
-                        <div className='wr-mods-column-container d-flex flex-column px-2'>
-                            <h5 className='fw-bold'>Hero Mods</h5>
-                            {renderText(nightfallHeroMods)}
-                        </div>
-                        <div className='wr-mods-column-container d-flex flex-column px-2'>
-                            <h5 className='fw-bold'>Legend Mods</h5>
-                            {renderText(nightfallLegendMods)}
-                        </div>
-                        <div className='wr-mods-column-container d-flex flex-column px-2'>
-                            <h5 className='fw-bold'>Master Mods</h5>
-                            {renderText(nightfallMasterMods)}
-                        </div>
-                    </div>
-                </Carousel.Caption>
-            </Carousel.Item>
-            */}
-          </Carousel>
-            {clickedItem && isMobile && (
-                <div className="clicked-item">
-                    <Card className='weapon-info mt-5'>
-                    <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
-                        <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
+            {/* This is for loading content on anything but mobile*/}
+            {clickedItem && !isMobile  &&
+                (
+                    <div className="clicked-item">
+                        <Card className='weapon-info'>
+                        <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
+                        {clickedItem.screenshot && (
+                            <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
+                        )}
+                        {clickedItem.secondaryIcon && (
+                            <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.secondaryIcon} />
+                        )}
                         <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
-                                <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
-                                    <h2>{clickedItem.name}</h2>
-                                    <h5>{clickedItem.typeAndTierDisplayName}</h5>
-                                </div>
-                                <div className='p-2'>
-                                    <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']}/>
-                                </div>
+                            <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
+                                <h2>{clickedItem.name}</h2>
+                                <h5>{clickedItem.typeAndTierDisplayName}</h5>
                             </div>
-                            <div className='d-flex flex-row text-light' style={{background:'#6c757d'}}>
-                                <div className='p-2'>
-                                    <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']}></img>
-                                </div>
-                                <div className='align-self-center p-3'>
+                            {clickedItem.damageTypeIcon && (
+                            <div className='p-2'>
+                                <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']} alt={clickedItem.damageTypeName}/>
+                            </div>
+                            )}
+                        </div>
+                        {(clickedItem.damageTypeIcon || clickedItem.rpmStat || clickedItem.frameName || clickedItem.frameDescription || clickedItem.description) && (
+                        <div className='d-flex flex-row text-light justify-content-between' style={{background:'#6c757d'}}>
+                            {clickedItem.frameIcon && (
+                            <div className='align-self-center p-2'>
+                                <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']} alt={clickedItem.frameName}></img>
+                            </div>
+                            )}
+                            {clickedItem.frameName ? 
+                                (
+                                <div className='align-self-center p-2'>
                                     <h5>{clickedItem['frameName']}</h5>
                                     <p>{clickedItem['frameDescription']}</p>  
                                 </div>
-                                <div className='d-flex flex-column align-self-center p-3'>
-                                    <span>RPM </span>
-                                    <span>{clickedItem['rpmStat']}</span>
+                                ) : (
+                                <div className='align-self-center p-2'>
+                                    <p>{clickedItem['description']}</p>  
                                 </div>
+                                )
+                            }
+                            {clickedItem.rpmStat && (
+                            <div className='d-flex flex-column align-self-center p-3'>
+                                <span>RPM </span>
+                                <span>{clickedItem['rpmStat']}</span>
                             </div>
-                    </Card>
-                </div>
-            )}
+                            )}
+                        </div>
+                        )}
+                        </Card>
+                    </div>
+                )
+            }
+          </Carousel>
+            {/* This is for loading content on mobile */}
+            {clickedItem && isMobile && 
+                (
+                    <div className="clicked-item">
+                        <Card className='weapon-info mt-5'>
+                        <Button variant="danger" className="close-button" onClick={handleClose}>X</Button>
+                        {clickedItem.screenshot && (
+                            <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.screenshot} />
+                        )}
+                        {clickedItem.secondaryIcon && (
+                            <Card.Img variant="top" src={"https://www.bungie.net" + clickedItem.secondaryIcon} />
+                        )}
+                            <div className='d-flex flex-row text-light' style={{background: tierTypeColors[clickedItem?.tierTypeName] || tierTypeColors["Default"]}}>
+                                    <div className='d-flex flex-column flex-grow-1 align-items-start p-2'>
+                                        <h2>{clickedItem.name}</h2>
+                                        <h5>{clickedItem.typeAndTierDisplayName}</h5>
+                                    </div>
+                                    {clickedItem.damageTypeIcon && (
+                                    <div className='p-2'>
+                                        <img className='damage-type-icon' src={"https://www.bungie.net" + clickedItem['damageTypeIcon']} alt={clickedItem.damageTypeName}/>
+                                    </div>
+                                    )}
+                                </div>
+                                {(clickedItem.damageTypeIcon || clickedItem.rpmStat || clickedItem.frameName || clickedItem.frameDescription || clickedItem.description) && (
+                                <div className='d-flex flex-row text-light justify-content-between' style={{background:'#6c757d'}}>
+                                    {clickedItem.damageTypeIcon && (
+                                    <div className='align-self-center p-2'>
+                                        <img className='frame-icon' src={"https://www.bungie.net" + clickedItem['frameIcon']} alt={clickedItem.damageTypeName}></img>
+                                    </div>
+                                    )}
+                                    {clickedItem.frameName ? 
+                                        (
+                                        <div className='align-self-center p-2'>
+                                            <h5>{clickedItem['frameName']}</h5>
+                                            <p>{clickedItem['frameDescription']}</p>  
+                                        </div>
+                                        ) : (
+                                        <div className='align-self-center p-2'>
+                                            <p>{clickedItem['description']}</p>  
+                                        </div>
+                                        )
+                                    }
+                                    {clickedItem.rpmStat && (
+                                    <div className='d-flex flex-column align-self-center p-2'>
+                                        <span>RPM </span>
+                                        <span>{clickedItem['rpmStat']}</span>
+                                    </div>
+                                    )}
+                                    
+                                </div>
+                                )}
+                        </Card>
+                    </div>
+                )
+            }
         </>
           
     );
