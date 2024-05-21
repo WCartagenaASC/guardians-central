@@ -96,7 +96,7 @@ public class InventoryItemDefinitionJson{
         public int? displayMaximum { get; set; }
     }
     public class Stats{
-        public Dictionary<long, Stat> stats { get; set; }
+        public Dictionary<long, Stat>? stats { get; set; }
     }
     public class Root{
         public DisplayProperties? displayProperties { get; set; }
@@ -129,6 +129,8 @@ public class DamageTypeMapping{
         };
     }
 }
+
+// This contains list of inventory item hashes for each rotator
 public class WeeklyRotatorsMapping{
     public Dictionary<string, List<long>> Mapping { get; }
     public WeeklyRotatorsMapping(){
@@ -139,12 +141,49 @@ public class WeeklyRotatorsMapping{
                     1496857121,2293199928,3434445392,328467570,2786161293,1721938300,3118392309,4235863403,399547095,2975563522 
                 }
             },
+            { "The Shattered Throne", new List<long> 
+                { 
+                    814876684,2465372924,3723679465,355922321,1874424704,2140635451,250721843,1472713738,1478378067,2561756285,788771493,4023744176,2804026582,
+                    4008120231,3368092113,3185383401,844097260,1076538039,150052158,757360370,569434520,1394177923
+                } 
+            },
+            { "Prophecy", new List<long> 
+                { 
+                } 
+            },
+            { "Grasp of Avarice", new List<long> 
+                { 
+                } 
+            },
+            { "Ghost of the Deep", new List<long> 
+                { 
+                } 
+            },
+            { "Duality", new List<long> 
+                { 
+                } 
+            },
+            { "Spire of the Watcher", new List<long> 
+                { 
+                } 
+            },
             { "Vox Obscura", new List<long> 
                 { 
                     46125926,2097055732,4067556514,1248372789,232928045,4096943616,1572896086,3189860891,2240729575,187431790,438108034,
                     2270509928,3957071315,2516879931,4017738218,4144240158,3056950148,3473867303,849255710,119228495,3465627817,693728753,950963812 
                 } 
             },
+            { "Operation Seraph's Shield", new List<long> 
+                { 
+                    1473821207,1751893422,3849444474,2978226043,1731355324,1168625549,2302346155,2149683300,4186079026,2272041093,3103325054,1059446290,1525902715,
+                    839296981,4270910189,4256213288,648266032,446049665,4116381015,1940895219,1949733158,2974824815,1259550198,2710316218,2471829328,1934312075
+                }
+            },
+            { "Presage", new List<long> 
+                { 
+
+                }
+            }
         };
     }
 }
@@ -311,7 +350,7 @@ public class WeeklyRotatorsTable{
                     List<long> inventoryItemIdList = new List<long>();
                     var weeklyRotatorsMapping = new WeeklyRotatorsMapping();
                     // Query to get all items associated with an activiy names
-                    if(weeklyRotatorsMapping.Mapping.ContainsKey(activityName)){
+                    if(weeklyRotatorsMapping.Mapping.ContainsKey(activityName ?? string.Empty)){
                         var itemHashes = weeklyRotatorsMapping.Mapping[activityName];
                         foreach(long itemHash in itemHashes){
                             long inventoryItemId = unchecked((int)itemHash);
