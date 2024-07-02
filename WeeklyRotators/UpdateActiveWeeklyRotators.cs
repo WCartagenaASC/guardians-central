@@ -13,6 +13,9 @@ public class UpdateActiveWeeklyRotators{
         // Dictionary to store weekly rotator milestones
         Dictionary<string, PublicMilestonesResponse.Milestone> rawWeeklyRotatorsDictionary = new Dictionary<string, PublicMilestonesResponse.Milestone>();
 
+        // List of banned hashes
+        List<string> bannedHashes = new List<string> { "3690703860" };
+
         // Loops through all milestones and checks for the 3 Weekly Rotators and adds them to a list
         if (PublicMilestonesObject.Response != null) {
             foreach (KeyValuePair<string, PublicMilestonesResponse.Milestone> milestoneKVP in PublicMilestonesObject.Response){
@@ -21,7 +24,7 @@ public class UpdateActiveWeeklyRotators{
                         if(activity.ChallengeObjectiveHashes != null){
                             if(activity.ChallengeObjectiveHashes.Count > 0){ 
                                 // Check if the key exist already if it does do not add it. This will eliminate the Legend versions from the dict
-                                if (!rawWeeklyRotatorsDictionary.ContainsKey(milestoneKVP.Key) && milestoneKVP.Key != "3690703860"){
+                                if (!rawWeeklyRotatorsDictionary.ContainsKey(milestoneKVP.Key) && !bannedHashes.Contains(milestoneKVP.Key)) {
                                     // Create a new dictionary to hold the milestone
                                     rawWeeklyRotatorsDictionary.Add(milestoneKVP.Key, milestoneKVP.Value);
                                 }

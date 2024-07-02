@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log(process.env.DATABASE_PORT);
 const sql = require('mssql');
 
 const server = process.env.SERVER_IP;

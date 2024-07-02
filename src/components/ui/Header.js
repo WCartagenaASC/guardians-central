@@ -1,10 +1,10 @@
 import React from "react"
 import {LinkContainer} from 'react-router-bootstrap'
 import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
+//import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from "react-router-dom";
-import img from '../../assets/images/logo192.png'
+//import { Link } from "react-router-dom";
+import logoImg from '../../assets/images/logo192.png'
 import './Header.scss'
 
 const Header = () => {
@@ -16,13 +16,14 @@ const Header = () => {
             <Navbar.Brand>            
             <img
               alt=""
-              src={img}
+              src={logoImg}
               width="30"
               height="30"
               className="d-inline-block align-top"
             />{' '}Guardians Central</Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          {/* Uncomment this when other pages are added. This allows the toggle button to show up on mobile */}
+          {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
           <Navbar.Collapse id="basic-navbar-nav">
             {/*<Nav>
                 <ul className="navbar-nav mb-2 mb-lg-0 ">
